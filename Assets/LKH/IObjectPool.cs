@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 
 public interface IObjectPool
 {
-    public IPooledObject GetObject();
+    public IPooledObject GetObject(Vector3 position, Quaternion rotation);
 
-    public void ReturnObject();
+    public void ReturnObject(IPooledObject instance);
 }
