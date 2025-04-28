@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class MonsterAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // 가상 플레이어
+    [SerializeField] int demage;
+    //public void Attack(Player player)
+    //{
+    //    player.TakeDamage(demage);
+    //}
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) 
+        {
+            //Player player = collision.gameObject.gameObject.GetComponent<Player>();
+            //if(player != null)
+            //{
+            //    Attack(player);
+            //}
+        }
     }
 }

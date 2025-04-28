@@ -26,6 +26,7 @@ public class Monster : MonoBehaviour
         }
     }
 
+
     private IEnumerator DetectTarget()
     {
         while (true)
@@ -59,6 +60,7 @@ public class Monster : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+
     private void Trace()
     {
         // y축은 변화 x
@@ -71,9 +73,6 @@ public class Monster : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-
-        //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, monsterSpeed * Time.deltaTime);
-        //transform.LookAt(target.transform.position);
     }
 
     private void OnDrawGizmos()
@@ -82,6 +81,5 @@ public class Monster : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(eyeTransform.position, detectRadius);
-
     }
 }
