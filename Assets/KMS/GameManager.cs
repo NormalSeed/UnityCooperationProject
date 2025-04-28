@@ -17,7 +17,22 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private int maxScore;
     // 게임 오버 시에 실행될 이벤트들을 지정합니다.
     [SerializeField] private UnityEvent gameOverEvent;
+    [SerializeField] private UnityEvent gameClearEvent;
+    [SerializeField] private UnityEvent<int> scoreChangeEvent;
 
+    // 게임 매니저가 플레이어를 참조하도록 합니다.
+    private GameObject player;
+    public GameObject Player
+    {
+        get
+        {
+            if (player == null)
+            {
+                player = GameObject.FindGameObjectWithTag("player");
+            }
+            return player;
+        }
+    }
     // 바로 이전에 열렸던 씬의 인덱스를 저장합니다. 최초 -1
     private int lastOpenedSceneIndex;
     // 현재 열려있는 씬의 인덱스를 저장힙니다.
@@ -40,44 +55,15 @@ public class GameManager : Singleton<GameManager>
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            LoadScene(0);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            LoadScene(1);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            LoadScene(2);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            LoadScene(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            LoadPreviousScene();
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            LoadNextScene();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            LoadLastOpenedScene();
-        }
+
     }
     // 게임 매니저 세팅을 초기화합니다.
-    // 점수를 0점으로 하며, 인덱스 0번의 씬으로 이동합니다.
     public void Init()
     {
-        score = 0;
+        ScoreSet(0);
         isGameOver = false;
         lastOpenedSceneIndex = -1;
-        currentSceneIndex = 0;
-        SceneManager.LoadSceneAsync(currentSceneIndex);
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
     // 지정한 인덱스의 씬으로 이동합니다.
     public void LoadScene(int index)
@@ -86,6 +72,7 @@ public class GameManager : Singleton<GameManager>
         {
             return;
         }
+        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = index;
         SceneManager.LoadSceneAsync(currentSceneIndex);
@@ -93,6 +80,7 @@ public class GameManager : Singleton<GameManager>
     // 지정한 이름의 씬으로 이동합니다.
     public void LoadScene(string name)
     {
+        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = SceneManager.GetSceneByName(name).buildIndex;
         SceneManager.LoadSceneAsync(currentSceneIndex);
@@ -109,6 +97,7 @@ public class GameManager : Singleton<GameManager>
         int temp = currentSceneIndex;
         currentSceneIndex = lastOpenedSceneIndex;
         lastOpenedSceneIndex = temp;
+        player = null;
         SceneManager.LoadSceneAsync(currentSceneIndex);
 
     }
@@ -120,6 +109,7 @@ public class GameManager : Singleton<GameManager>
         {
             return;
         }
+        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex++;
         SceneManager.LoadSceneAsync(currentSceneIndex);
@@ -132,16 +122,18 @@ public class GameManager : Singleton<GameManager>
         {
             return;
         }
+        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex--;
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
 
     // 지정한 정수만큼 점수를 올립니다.
+    // 매개변수 미설정 시 1을 증가시킵니다.
     // 점수는 maxScore보다 커질 수 없습니다.
     public void ScoreUp(int amount = 1)
     {
-        if (amount <= 0)
+        if (amount < 0)
         {
             amount = 0;
         }
@@ -155,10 +147,11 @@ public class GameManager : Singleton<GameManager>
     }
 
     // 지정한 정수만큼 점수를 내립니다.
+    // 매개변수 미설정 시 1을 감소시킵니다.
     // 점수는 0 보다 작아질 수 없습니다.
     public void ScoreDown(int amount = 1)
     {
-        if (amount <= 0)
+        if (amount < 0)
         {
             amount = 0;
         }
@@ -171,9 +164,24 @@ public class GameManager : Singleton<GameManager>
         score = nextScore;
     }
 
-    // 게임 오버 시 지정된 이벤트를 실행합니다.
+    // 지정된 정수로 점수를 설정합니다.
+    public void ScoreSet(int score)
+    {
+        this.score = score;
+    }
+
+    // 게임을 오버시키고 지정된 이벤트를 실행합니다.
     public void GameOver()
     {
-        gameOverEvent.Invoke();
+        isGameOver = true;
+        gameOverEvent?.Invoke();
+    }
+    public void GameClear()
+    {
+
+    }
+    public void Pause()
+    {
+
     }
 }
