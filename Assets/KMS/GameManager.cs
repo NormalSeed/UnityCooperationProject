@@ -2,58 +2,119 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] bool isGameOver;
-    [SerializeField] int score;
-    private Scene lastOpenedScene;
-    private Scene currentScene;
+    [SerializeField] private bool isGameOver;
+    [SerializeField] private int score;
+    private int lastOpenedSceneIndex;
+    private int currentSceneIndex;
+    public bool IsGameOver { get { return isGameOver; } }
+    public int Score { get { return score; } }
+    public int LastOpendSceneIndex { get { return lastOpenedSceneIndex; } }
+    public int CurrentSceneIndex {  get { return currentSceneIndex; } }
+    
+    private int SceneLength => SceneManager.sceneCountInBuildSettings;
     private void Awake()
     {
         SetInstance();
     }
     private void Start()
     {
-        //previousScene = SceneManager.GetActiveScene();
-        currentScene = SceneManager.GetActiveScene();
+        lastOpenedSceneIndex = -1;
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            LoadScene(0);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            LoadScene(1);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            LoadScene(2);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            LoadScene(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            LoadPreviousScene();
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            LoadNextScene();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            LoadLastOpenedScene();
+        }
     }
 
     public void LoadScene(int index)
     {
-        lastOpenedScene = currentScene;
-        currentScene = SceneManager.GetSceneByBuildIndex(index);
-        SceneManager.LoadSceneAsync(currentScene.buildIndex);
+        if (index < 0 || index >= SceneLength)
+        {
+            return;
+        }
+        lastOpenedSceneIndex = currentSceneIndex;
+        currentSceneIndex = index;
+        SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     public void LoadScene(string name)
     {
-        lastOpenedScene = currentScene;
-        currentScene = SceneManager.GetSceneByName(name);
-        SceneManager.LoadSceneAsync(currentScene.buildIndex);
+        lastOpenedSceneIndex = currentSceneIndex;
+        currentSceneIndex = SceneManager.GetSceneByName(name).buildIndex;
+        SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     public void LoadLastOpenedScene()
     {
-        Scene temp = currentScene;
-        currentScene = lastOpenedScene;
-        lastOpenedScene = temp;
-        SceneManager.LoadSceneAsync(currentScene.buildIndex);
+        if (lastOpenedSceneIndex == -1)
+        {
+            return;
+        }
+        int temp = currentSceneIndex;
+        currentSceneIndex = lastOpenedSceneIndex;
+        lastOpenedSceneIndex = temp;
+        SceneManager.LoadSceneAsync(currentSceneIndex);
+
     }
     public void LoadNextScene()
     {
-        lastOpenedScene = currentScene;
-        currentScene = SceneManager.GetSceneByBuildIndex(currentScene.buildIndex + 1);
-        SceneManager.LoadSceneAsync(currentScene.buildIndex);
+        if (currentSceneIndex == SceneLength - 1)
+        {
+            return;
+        }
+        lastOpenedSceneIndex = currentSceneIndex;
+        currentSceneIndex++;
+        SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     public void LoadPreviousScene()
     {
-        lastOpenedScene = currentScene;
-        currentScene = SceneManager.GetSceneByBuildIndex(currentScene.buildIndex - 1);
-        SceneManager.LoadSceneAsync(currentScene.buildIndex);
+        if (currentSceneIndex == 0)
+        {
+            return;
+        }
+        lastOpenedSceneIndex = currentSceneIndex;
+        currentSceneIndex--;
+        SceneManager.LoadSceneAsync(currentSceneIndex);
+    }
+
+    public void ScoreUp()
+    {
+        score++;
+    }
+    public void ScoreDown()
+    {
+        score--;
     }
 }
