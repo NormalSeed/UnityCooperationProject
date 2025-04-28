@@ -8,7 +8,7 @@ public class PooledBullet : MonoBehaviour, IPooledObject
     [SerializeField] float returnTime;
     private float timer;
 
-    public void Reset()
+    public void ResetObject()
     {
         // 초기화 작업
         gameObject.SetActive(false);
@@ -30,9 +30,9 @@ public class PooledBullet : MonoBehaviour, IPooledObject
        // returnTime 만큼의 시간이 흐르면 풀에 반환
         timer -= Time.deltaTime;
        if (timer <= 0)
-        {
-            ReturnPool();
-        }
+       {
+           ReturnPool();
+       }
     }
     public void ReturnPool()
     {
