@@ -4,11 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/KMS/TestScene.unity
-    guid: 6bc091c5acf72b74ab1cc46e4b764ba9
-  - enabled: 1
-    path: Assets/KMS/TestScene2.unity
-    guid: 90255d6189cbd2e43b4961d79a90f370
+  m_Scenes: []
   m_configObjects: {}
