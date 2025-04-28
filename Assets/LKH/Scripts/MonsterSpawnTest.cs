@@ -27,8 +27,8 @@ public class MonsterSpawnTest : MonoBehaviour
 
     public void SpawnMonster()
     {
-            PooledMonster monster = (PooledMonster)monsterPool.GetObject(transform.position, transform.rotation);
-            Debug.Log($"{monster}가 플레이어를 쫓아갑니다");
+        PooledMonster monster = (PooledMonster)monsterPool.GetObject(transform.position, transform.rotation);
+        Debug.Log($"{monster}가 플레이어를 쫓아갑니다");
     }
     IEnumerator SpawnCoroutine()
     {

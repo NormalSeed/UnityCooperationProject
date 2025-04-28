@@ -16,6 +16,17 @@ public class PooledMonster : MonoBehaviour, IPooledObject
         return gameObject;
     }
 
+    public void ActiveReturn()
+    {
+        if (poolToReturn.pool.Count > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ReturnPool();
+            }
+        }
+    }
+
     public void ReturnPool()
     {
         if (poolToReturn == null)
