@@ -33,4 +33,9 @@ public class Testplayercontroll : MonoBehaviour
         attack += amount;
         Debug.Log("공격력" + attack);
     }
+    public void IncreaseSpeed(float amount)
+    {
+        playerSpeed += amount;
+        Debug.Log("스피드" + playerSpeed);
+    }
 }
