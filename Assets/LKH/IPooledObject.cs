@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IPooledObject
 {
+    void Reset();
+    GameObject GetGameObject();
     public void ReturnPool();
 }
