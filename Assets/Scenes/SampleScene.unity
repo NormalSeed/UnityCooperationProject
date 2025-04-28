@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: []
-  prefab: {fileID: 7198749012235078258, guid: 117b6391864725c4c8beeb5a6d10790e, type: 3}
+  prefab: {fileID: 8416983622368803343, guid: 69869eb77bfef7a4bb5842add7a2369c, type: 3}
   poolSize: 5
 --- !u!136 &720203101
 CapsuleCollider:
@@ -456,13 +456,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601140658}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!114 &1601140660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1108daf138fd5ef45848811886d79470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 5239403641803255636, guid: 117b6391864725c4c8beeb5a6d10790e, type: 3}
+  bulletPrefab: {fileID: 5167602249664226915, guid: 69869eb77bfef7a4bb5842add7a2369c, type: 3}
   bulletPool: {fileID: 720203100}
   bulletSpeed: 20
 --- !u!1660057539 &9223372036854775807
