@@ -11,7 +11,7 @@ public class BulletPool : MonoBehaviour, IObjectPool
 
     private void Awake()
     {
-        for (int i = 0; i < pool.Count; i++)
+        for (int i = 0; i < poolSize; i++)
         {
             PooledBullet instance = Instantiate(prefab);
             instance.gameObject.SetActive(false);
