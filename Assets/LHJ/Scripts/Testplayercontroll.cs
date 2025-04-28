@@ -28,4 +28,9 @@ public class Testplayercontroll : MonoBehaviour
     {
         rigid.velocity = inputVec * playerSpeed;
     }
+    public void IncreaseAttack(int amount)
+    {
+        attack += amount;
+        Debug.Log("공격력" + attack);
+    }
 }
