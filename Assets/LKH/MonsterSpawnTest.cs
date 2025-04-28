@@ -14,7 +14,15 @@ public class MonsterSpawnTest : MonoBehaviour
 
     private void Update()
     {
-
+        if (spawnCoroutine != null && monsterPool.pool.Count == 0)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
+        }
+        else if(spawnCoroutine == null && monsterPool.pool.Count > 0)
+        {
+            spawnCoroutine = StartCoroutine(SpawnCoroutine());
+        }
     }
 
     public void SpawnMonster()
