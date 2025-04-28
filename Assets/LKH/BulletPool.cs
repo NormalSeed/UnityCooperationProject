@@ -33,12 +33,12 @@ public class BulletPool : MonoBehaviour, IObjectPool
         instance.transform.rotation = rotation;
         instance.gameObject.SetActive(true);
 
-        return instance;
+        return (PooledBullet)instance;
     }
 
     public void ReturnObject(IPooledObject instance)
     {
-        instance.Reset();
+        instance.ResetObject();
         pool.Add((PooledBullet)instance);
     }
 }
