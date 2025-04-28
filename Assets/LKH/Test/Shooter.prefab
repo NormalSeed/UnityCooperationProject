@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6018644672409007206}
   - component: {fileID: 8867737394320835087}
+  - component: {fileID: -4808425533035836659}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Untagged
@@ -47,3 +48,16 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5167602249664226915, guid: 69869eb77bfef7a4bb5842add7a2369c, type: 3}
   bulletPool: {fileID: 0}
   bulletSpeed: 20
+--- !u!114 &-4808425533035836659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4596086041195022874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1819ce9d270b8e845b96fff1a3770ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolToReturn: {fileID: 0}

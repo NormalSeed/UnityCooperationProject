@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TestShooter : MonoBehaviour
 {
-    [SerializeField] GameObject bulletPrefab;
     [SerializeField] BulletPool bulletPool;
 
     [Range(10, 30)]
