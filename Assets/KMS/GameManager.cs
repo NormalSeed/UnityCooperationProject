@@ -5,12 +5,17 @@ using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private string gameName = "공 굴리기 게임";
     [SerializeField] private bool isGameOver;
     [SerializeField] private int score;
+    [SerializeField] private int maxScore;
+    [SerializeField] private UnityEvent gameOverEvent;
+
     private int lastOpenedSceneIndex;
     private int currentSceneIndex;
     public bool IsGameOver { get { return isGameOver; } }
@@ -25,8 +30,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        lastOpenedSceneIndex = -1;
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        Init();
     }
     private void Update()
     {
@@ -59,7 +63,14 @@ public class GameManager : Singleton<GameManager>
             LoadLastOpenedScene();
         }
     }
-
+    public void Init()
+    {
+        score = 0;
+        isGameOver = false;
+        lastOpenedSceneIndex = -1;
+        currentSceneIndex = 0;
+        SceneManager.LoadSceneAsync(currentSceneIndex);
+    }
     public void LoadScene(int index)
     {
         if (index < 0 || index >= SceneLength)
@@ -109,12 +120,29 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
 
-    public void ScoreUp()
+    public void ScoreUp(int amount = 1)
     {
-        score++;
+        int nextScore = score + amount;
+        if (nextScore >= maxScore)
+        {
+            score = maxScore;
+            return;
+        }
+        score = nextScore;
     }
-    public void ScoreDown()
+    public void ScoreDown(int amount = 1)
     {
-        score--;
+        int nextScore = score - amount;
+        if (nextScore <= 0)
+        {
+            score = 0;
+            return;
+        }
+        score = nextScore;
+    }
+
+    public void GameOver()
+    {
+        gameOverEvent.Invoke();
     }
 }
