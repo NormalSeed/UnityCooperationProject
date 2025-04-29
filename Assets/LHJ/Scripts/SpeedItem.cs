@@ -24,6 +24,8 @@ public class SpeedItem : Item
         }
         Destroy(gameObject);
     }
+
+    // 일정 시간 동안 이동속도 증가 및 복구
     private IEnumerator TemporaryAttackBuff(Testplayercontroll player)
     {
         player.IncreaseSpeed(speedIncrease);
