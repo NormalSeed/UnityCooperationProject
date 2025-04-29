@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedItem : Item
+public class ScoreItem : Item
 {
-
-    [SerializeField] private float speedIncrease;
-    [SerializeField] private float buffTime;
+    [SerializeField] private int scoreIncrease;
+    [SerializeField] private GameObject scoreEffect;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -20,16 +19,13 @@ public class SpeedItem : Item
         Testplayercontroll playerController = player.GetComponent<Testplayercontroll>();
         if (playerController != null)
         {
-            playerController.StartCoroutine(TemporaryAttackBuff(playerController));
+            playerController.IncreaseScore(scoreIncrease);
+            if (scoreEffect != null)
+            {
+                GameObject effect = Instantiate(scoreEffect, player.transform.position, Quaternion.identity);
+                Destroy(effect, 3f); 
+            }
         }
         Destroy(gameObject);
-    }
-
-    // 일정 시간 동안 이동속도 증가 및 복구
-    private IEnumerator TemporaryAttackBuff(Testplayercontroll player)
-    {
-        player.IncreaseSpeed(speedIncrease);
-        yield return new WaitForSeconds(buffTime);
-        player.IncreaseSpeed(-speedIncrease);
     }
 }

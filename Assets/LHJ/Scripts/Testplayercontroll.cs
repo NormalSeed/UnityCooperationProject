@@ -8,6 +8,9 @@ public class Testplayercontroll : MonoBehaviour
     [SerializeField] private Rigidbody rigid;
     [SerializeField] private float playerSpeed;
     [SerializeField] private int attack;
+    [SerializeField] private int score;
+    [SerializeField] private int maxHp;
+    [SerializeField] private int currentHp;
 
     private Vector3 inputVec;
     void Update()
@@ -37,5 +40,24 @@ public class Testplayercontroll : MonoBehaviour
     {
         playerSpeed += amount;
         Debug.Log("스피드" + playerSpeed);
+    }
+    public void IncreaseScore(int amount)
+    {
+        score += amount;
+        Debug.Log("점수" + score);
+    }
+
+    public bool Heal(int amount)
+    {
+        if(currentHp >= maxHp)
+        {
+            Debug.Log("체력이 가득찼습니다.");
+            return false;
+        }
+        currentHp += amount;
+        if (currentHp > maxHp)
+            currentHp = maxHp;
+        Debug.Log($"현재 체력: {currentHp}/{maxHp}");
+        return true;
     }
 }
