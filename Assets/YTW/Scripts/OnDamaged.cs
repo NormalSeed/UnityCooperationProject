@@ -22,6 +22,14 @@ public class OnDamaged : MonoBehaviour
         {
             healthBar = GetComponentInChildren<HealthBar>();
         }
+        if (pooledMonster == null)
+        {
+            pooledMonster = GetComponent<PooledMonster>();
+            if (pooledMonster == null)
+            {
+                Debug.LogError($"PooledMonster 컴포넌트가 {gameObject.name}에 없습니다!", gameObject);
+            }
+        }
         healthBar?.SetHP(amount);
     }
 
@@ -33,8 +41,16 @@ public class OnDamaged : MonoBehaviour
         Debug.Log($"{damage}데미지 받아서 현재 채력 {CurHP}");
         if (CurHP <= 0)
         {
-            pooledMonster.ReturnPool();
-            gameObject.SetActive(false);
+            if (pooledMonster != null)
+            {
+                pooledMonster.ReturnPool();
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError($"pooledMonster가 null입니다.");
+            }
+            
         }
     }
 }
