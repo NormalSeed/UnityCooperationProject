@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 // 게임 매니저 컴포넌트입니다. 싱글톤을 상속받아 게임 내에 하나만 존재하며, 씬 전환시에도 사라지지 않습니다.
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private string gameTitle = "공 굴리기 게임";
+    [SerializeField] private string gameTitle = "BALL GAME";
     [SerializeField] private bool isGameOver;
     [SerializeField] private int score;
     [SerializeField] private int maxScore;
@@ -212,25 +212,28 @@ public class GameManager : Singleton<GameManager>
         this.score = score;
     }
 
-    // 게임을 오버시키고 지정된 이벤트를 실행합니다.
+    // 게임을 정지시키고 게임오버 UI를 활성화합니다.
     public void GameOver()
     {
         currentUI = UIList[1];
         currentUI.SetActive(true);
         Time.timeScale = 0.0f;
     }
+    // 게임을 정지시키고 레벨 클리어 UI를 활성화합니다.
     public void LevelClear()
     {
         currentUI = UIList[2];
         currentUI.SetActive(true);
         Time.timeScale = 0.0f;
-    }
+    }// 게임을 정지시키고 일시정지 UI를 활성화합니다.
     public void Pause()
     {
         currentUI = UIList[0];
         currentUI.SetActive(true);
         Time.timeScale = 0.0f;
     }
+    // UI를 비활성화시켜 UI에서 빠져나오는 함수입니다.
+    // 시간을 다시 재개시킵니다.
     public void ExitUI()
     {
         currentUI.SetActive(false);
