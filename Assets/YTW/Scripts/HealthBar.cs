@@ -13,17 +13,5 @@ public class HealthBar : MonoBehaviour
     {
         fillImage.fillAmount = amount;
     }
-        
-    public void SetTarget(Transform followTarget)
-    {
-        target = followTarget;
-    }
 
-    private void LateUpdate()
-    {
-        if (target != null)
-        {
-            transform.forward = Camera.main.transform.forward;
-        }
-    }
 }

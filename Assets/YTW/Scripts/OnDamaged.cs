@@ -8,7 +8,9 @@ public class OnDamaged : MonoBehaviour
 {
     [SerializeField] int MaxHP;
     [SerializeField] int CurHP;
+    public int CURHP { get { return CurHP; } }
     [SerializeField] float amount = 1;
+    [SerializeField] PooledMonster pooledMonster;
 
     private HealthBar healthBar;
     
@@ -31,6 +33,7 @@ public class OnDamaged : MonoBehaviour
         Debug.Log($"{damage}데미지 받아서 현재 채력 {CurHP}");
         if (CurHP <= 0)
         {
+            pooledMonster.ReturnPool();
             gameObject.SetActive(false);
         }
     }

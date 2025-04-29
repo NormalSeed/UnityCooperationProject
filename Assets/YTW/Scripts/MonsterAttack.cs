@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MonsterAttack : MonoBehaviour
@@ -13,7 +10,7 @@ public class MonsterAttack : MonoBehaviour
 
     private float lastAttackTime;
 
-    
+
     public bool CanAttack(Transform target)
     {
         float distance = Vector3.Distance(transform.position, target.position);
@@ -24,13 +21,11 @@ public class MonsterAttack : MonoBehaviour
     public void Attack(Transform target)
     {
         // 공격을 한 후 쿨타임 계산을 위한 공격한 시간 저장
-        lastAttackTime = Time.time; 
-        
+        lastAttackTime = Time.time;
+
         OnDamaged targetHP = target.GetComponent<OnDamaged>();
-        if (targetHP != null)
-        {
-            targetHP.TakeDamaged(damage);
-            
-        }
+
+        targetHP?.TakeDamaged(damage);
+
     }
 }

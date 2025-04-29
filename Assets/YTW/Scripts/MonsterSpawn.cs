@@ -10,7 +10,6 @@ public class MonsterSpawn : MonoBehaviour
 
     private void Update()
     {
-        
         if (spawnCoroutine == null && monsterPool.pool.Count > 0)
         {
             spawnCoroutine = StartCoroutine(SpawnCoroutine());
@@ -21,11 +20,6 @@ public class MonsterSpawn : MonoBehaviour
             spawnCoroutine = null;
         }
     }
-
-    public void SpawnMonster()
-    {
-        monsterPool.GetObject(transform.position, transform.rotation);
-    }
     private IEnumerator SpawnCoroutine()
     {
         while (true)
@@ -33,5 +27,9 @@ public class MonsterSpawn : MonoBehaviour
             yield return new WaitForSeconds(coolTime);
             SpawnMonster();
         }
+    }
+    public void SpawnMonster()
+    {
+        monsterPool.GetObject(transform.position, transform.rotation);
     }
 }
