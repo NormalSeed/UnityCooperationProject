@@ -5,6 +5,7 @@ using UnityEngine;
 public class ScoreItem : Item
 {
     [SerializeField] private int scoreIncrease;
+    [SerializeField] private GameObject scoreEffect;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -19,6 +20,11 @@ public class ScoreItem : Item
         if (playerController != null)
         {
             playerController.IncreaseScore(scoreIncrease);
+            if (scoreEffect != null)
+            {
+                GameObject effect = Instantiate(scoreEffect, player.transform.position, Quaternion.identity);
+                Destroy(effect, 3f); 
+            }
         }
         Destroy(gameObject);
     }

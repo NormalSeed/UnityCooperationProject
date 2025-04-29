@@ -752,6 +752,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8005697506882098260, guid: 13971cd3cfc2cd644a97b60ae2357ca7, type: 3}
+      propertyPath: scoreEffect
+      value: 
+      objectReference: {fileID: 6220918490801148041, guid: a736f18f5f57a4a40aba40a462e9fd8e, type: 3}
+    - target: {fileID: 8005697506882098260, guid: 13971cd3cfc2cd644a97b60ae2357ca7, type: 3}
       propertyPath: scoreIncrease
       value: 100
       objectReference: {fileID: 0}
