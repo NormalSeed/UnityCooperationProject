@@ -18,8 +18,15 @@ public class PotionItem : Item
         Testplayercontroll playerController = player.GetComponent<Testplayercontroll>();
         if (playerController != null)
         {
-            playerController.Heal(heal);
-        }
-        Destroy(gameObject);
+            bool healed = playerController.Heal(heal);
+            if (healed)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+
+            }
+        }  
     }
 }
