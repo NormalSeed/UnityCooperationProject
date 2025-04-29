@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
-public class MonsterSpawnTest : MonoBehaviour
+public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField] MonsterPool monsterPool;
     private Coroutine spawnCoroutine;
@@ -21,7 +20,7 @@ public class MonsterSpawnTest : MonoBehaviour
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
         }
-        else if(spawnCoroutine == null && monsterPool.pool.Count > 0)
+        else if (spawnCoroutine == null && monsterPool.pool.Count > 0)
         {
             spawnCoroutine = StartCoroutine(SpawnCoroutine());
         }
@@ -34,7 +33,7 @@ public class MonsterSpawnTest : MonoBehaviour
     public void SpawnMonster()
     {
         monster = (PooledMonster)monsterPool.GetObject(transform.position, transform.rotation);
-        Debug.Log($"{monster}°¡ ÇÃ·¹ÀÌ¾î¸¦ ÂÑ¾Æ°©´Ï´Ù");
+        Debug.Log($"{monster}ê°€ í”Œë ˆì´ì–´ë¥¼ ì«“ì•„ê°‘ë‹ˆë‹¤");
     }
     IEnumerator SpawnCoroutine()
     {
