@@ -7,6 +7,7 @@ public class AttackItem : Item
 {
     [SerializeField] private int attackIncrease;
     [SerializeField] private float buffTime;
+    [SerializeField] private GameObject powerupEffect;
 
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +25,11 @@ public class AttackItem : Item
         if (playerController != null)
         {
             playerController.StartCoroutine(TemporaryAttackBuff(playerController));
+            if (powerupEffect != null)
+            {
+                GameObject effect = Instantiate(powerupEffect, player.transform.position, Quaternion.identity);
+                Destroy(effect, 5f); 
+            }
         }
 
         Destroy(gameObject); 
