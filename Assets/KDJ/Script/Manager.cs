@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
+using UnityEngine.UI; 
 
 
 public class GameManagerLogic : MonoBehaviour
 {
-    public int totalItemCount; // ë¨¹ì–´ì•¼í•˜ëŠ” ì•„ì´í…œì˜ ê°¯ìˆ˜
-    public int stage; //ìŠ¤í…Œì´ì§€ ë‹¨ê³„
-    public Text stageCountText; // UI ì„¤ì •ì„ ìœ„í•œ ë³€ìˆ˜ í™”ë©´ì— ìŠ¤í…Œì´ì§€ì—ì„œ ë¨¹ì–´ì•¼í•˜ëŠ” ì•„ì´í…œì˜ ê°¯ìˆ˜ë¥¼ í‘œì‹œ
-    public Text playerCountText; // UI ì„¤ì •ì„ ìœ„í•œ ë³€ìˆ˜ í™”ë©´ì— í˜„ìŸˆ ìŠ¤í…Œì´ì§€ì—ì„œ ìœ ì €ê°€ íšë“í•œ ì•„ì´í…œì˜ ê°¯ìˆ˜ë¥¼ í‘œì‹œí•¨
+    public int totalItemCount; // ¸Ô¾î¾ßÇÏ´Â ¾ÆÀÌÅÛÀÇ °¹¼ö
+    public int stage; //½ºÅ×ÀÌÁö ´Ü°è
+    public Text stageCountText; // UI ¼³Á¤À» À§ÇÑ º¯¼ö È­¸é¿¡ ½ºÅ×ÀÌÁö¿¡¼­ ¸Ô¾î¾ßÇÏ´Â ¾ÆÀÌÅÛÀÇ °¹¼ö¸¦ Ç¥½Ã
+    public Text playerCountText; // UI ¼³Á¤À» À§ÇÑ º¯¼ö È­¸é¿¡ ÇöÀğ ½ºÅ×ÀÌÁö¿¡¼­ À¯Àú°¡ È¹µæÇÑ ¾ÆÀÌÅÛÀÇ °¹¼ö¸¦ Ç¥½ÃÇÔ
     void Awake()
     {
         stageCountText.text = "/ " + totalItemCount.ToString();
@@ -19,7 +19,7 @@ public class GameManagerLogic : MonoBehaviour
     {
         playerCountText.text = count.ToString();
     }
-    void OnTriggerEnter(Collider other) //Colliderê°€ ë‹¤ë¥¸ íŠ¸ë¦¬ê±° ì´ë²¤íŠ¸ì— ì¹¨ì…í–ˆì„ ë•Œ OnTriggerEnterê°€ í˜¸ì¶œ
+    void OnTriggerEnter(Collider other) //Collider°¡ ´Ù¸¥ Æ®¸®°Å ÀÌº¥Æ®¿¡ Ä§ÀÔÇßÀ» ¶§ OnTriggerEnter°¡ È£Ãâ
 
     {
         if (other.gameObject.tag == "Player")
@@ -28,3 +28,4 @@ public class GameManagerLogic : MonoBehaviour
         }
     }
 }
+
