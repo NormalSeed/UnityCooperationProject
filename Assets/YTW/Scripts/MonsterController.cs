@@ -1,23 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent monster;
     [SerializeField] private Transform target;
     [SerializeField] private MonsterAttack attack;
-
-    void Start()
+  
+    void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        attack = GetComponent<MonsterAttack>();
+        Init();
+    }
+
+    void Init()
+    {
+        if (monster == null)
+        {
+            monster = GetComponent<NavMeshAgent>();
+            if (monster == null)
+            {
+                return; 
+            }
+        }
+
+        if (attack == null)
+        {
+            attack = GetComponent<MonsterAttack>();
+            if (attack == null)
+            {
+                return;
+            }
+        }
+
+        if (target == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                target = playerObject.transform;
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        DetectPlayer();
+    }
+
+    void DetectPlayer()
+    {
+        if (target != null)
+        {
+            monster.SetDestination(target.position);
+            if (attack.CanAttack(target))
+            {
+                attack.Attack(target);
+            }
+            else
+            {
+
+            }
+        }
     }
 }
