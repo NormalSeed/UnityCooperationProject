@@ -13,17 +13,21 @@ public class ScoreItem : Item
             RunItem();
         }
     }
+    // 아이템 효과 실행
     public override void RunItem()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Testplayercontroll playerController = player.GetComponent<Testplayercontroll>();
         if (playerController != null)
         {
+            // 플레이어 점수 증가
             playerController.IncreaseScore(scoreIncrease);
+
+            // 이펙트 재생
             if (scoreEffect != null)
             {
                 GameObject effect = Instantiate(scoreEffect, player.transform.position, Quaternion.identity);
-                Destroy(effect, 3f); 
+                Destroy(effect, 3f);       // 3초동안 실행되고 그 후 이펙트 삭제
             }
         }
         Destroy(gameObject);

@@ -25,10 +25,11 @@ public class AttackItem : Item
         if (playerController != null)
         {
             playerController.StartCoroutine(TemporaryAttackBuff(playerController));
+            // Effect 효과 실행
             if (powerupEffect != null)
             {
                 GameObject effect = Instantiate(powerupEffect, player.transform.position, Quaternion.identity);
-                Destroy(effect, 5f); 
+                Destroy(effect, 5f);  // 5초동안 이펙트가 실행되고 그 후 이펙트 삭제
             }
         }
 

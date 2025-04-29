@@ -14,6 +14,7 @@ public class SpeedItem : Item
             RunItem();
         }
     }
+    // 아이템 실행
     public override void RunItem()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
