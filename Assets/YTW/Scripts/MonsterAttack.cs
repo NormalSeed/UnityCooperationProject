@@ -9,6 +9,7 @@ public class MonsterAttack : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] float attackRange;
     [SerializeField] float attackCoolTime;
+    [SerializeField] MonsterController monster;
 
     private float lastAttackTime;
 
@@ -29,6 +30,7 @@ public class MonsterAttack : MonoBehaviour
         if (targetHP != null)
         {
             targetHP.TakeDamaged(damage);
+            
         }
     }
 }

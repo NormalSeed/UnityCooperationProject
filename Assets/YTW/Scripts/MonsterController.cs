@@ -6,7 +6,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private NavMeshAgent monster;
     [SerializeField] private Transform target;
     [SerializeField] private MonsterAttack attack;
-
+  
     void Awake()
     {
         Init();
@@ -60,6 +60,10 @@ public class MonsterController : MonoBehaviour
             if (attack.CanAttack(target))
             {
                 attack.Attack(target);
+            }
+            else
+            {
+
             }
         }
     }

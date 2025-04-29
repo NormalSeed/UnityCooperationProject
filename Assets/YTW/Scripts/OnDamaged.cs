@@ -10,32 +10,27 @@ public class OnDamaged : MonoBehaviour
     [SerializeField] int CurHP;
     [SerializeField] float amount = 1;
 
-    [SerializeField] GameObject healthBarPrefab;
-    private HealthBar healthBarInstance;
+    private HealthBar healthBar;
     
 
     private void OnEnable()
     {
         CurHP = MaxHP;
-
-        if(healthBarInstance == null)
+        if (healthBar == null)
         {
-            GameObject hpbar = Instantiate(healthBarPrefab);
-            healthBarInstance = hpbar.GetComponent<HealthBar>();
-            healthBarInstance.SetTarget(transform);
+            healthBar = GetComponentInChildren<HealthBar>();
         }
-        healthBarInstance?.SetHP(amount);
+        healthBar?.SetHP(amount);
     }
 
     public void TakeDamaged(int damage)
     {
         CurHP -= damage;
-        healthBarInstance?.SetHP((float) CurHP / MaxHP);
+        healthBar?.SetHP((float)CurHP / MaxHP);
         
         Debug.Log($"{damage}데미지 받아서 현재 채력 {CurHP}");
         if (CurHP <= 0)
         {
-            healthBarInstance.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
     }
