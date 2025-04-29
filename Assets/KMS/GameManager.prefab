@@ -44,3 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c13f9a1a17ca5418a8da71205a5377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameTitle: "\uACF5 \uAD74\uB9AC\uAE30 \uAC8C\uC784"
+  isGameOver: 0
+  score: 0
+  maxScore: 0
+  gameOverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  gameClearEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  scoreChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  gameOverUI: {fileID: 7166210187716250623, guid: d5ad268ab2118394798a9c81ef2e7d0c, type: 3}
+  pauseUI: {fileID: 7166210187716250623, guid: b9305ce652c6ad34fb8fd0ee62e362c1, type: 3}
+  levelClearUI: {fileID: 7166210187716250623, guid: 669c2f0722c7b0b4a9c27a171b6949b7, type: 3}

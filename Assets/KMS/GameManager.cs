@@ -5,22 +5,30 @@ using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-// °ÔÀÓ ¸Å´ÏÀú ÄÄÆ÷³ÍÆ®ÀÔ´Ï´Ù. ½Ì±ÛÅæÀ» »ó¼Ó¹Ş¾Æ °ÔÀÓ ³»¿¡ ÇÏ³ª¸¸ Á¸ÀçÇÏ¸ç, ¾À ÀüÈ¯½Ã¿¡µµ »ç¶óÁöÁö ¾Ê½À´Ï´Ù.
+// ê²Œì„ ë§¤ë‹ˆì € ì»´í¬ë„ŒíŠ¸ì…ë‹ˆë‹¤. ì‹±ê¸€í†¤ì„ ìƒì†ë°›ì•„ ê²Œì„ ë‚´ì— í•˜ë‚˜ë§Œ ì¡´ì¬í•˜ë©°, ì”¬ ì „í™˜ì‹œì—ë„ ì‚¬ë¼ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤.
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private string gameTitle = "°ø ±¼¸®±â °ÔÀÓ";
+    [SerializeField] private string gameTitle = "ê³µ êµ´ë¦¬ê¸° ê²Œì„";
     [SerializeField] private bool isGameOver;
     [SerializeField] private int score;
     [SerializeField] private int maxScore;
-    // °ÔÀÓ ¿À¹ö ½Ã¿¡ ½ÇÇàµÉ ÀÌº¥Æ®µéÀ» ÁöÁ¤ÇÕ´Ï´Ù.
-    [SerializeField] private UnityEvent gameOverEvent;
-    [SerializeField] private UnityEvent gameClearEvent;
-    [SerializeField] private UnityEvent<int> scoreChangeEvent;
+    // ê²Œì„ ì˜¤ë²„ ì‹œì— ì‹¤í–‰ë  ì´ë²¤íŠ¸ë“¤ì„ ì§€ì •í•©ë‹ˆë‹¤.
+    [SerializeField] private UnityEvent onGameOver;
+    [SerializeField] public UnityEvent onPause;
+    [SerializeField] private UnityEvent onLevelClear;
+    [SerializeField] private UnityEvent scoreChangeEvent;
 
-    // °ÔÀÓ ¸Å´ÏÀú°¡ ÇÃ·¹ÀÌ¾î¸¦ ÂüÁ¶ÇÏµµ·Ï ÇÕ´Ï´Ù.
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject levelClearUI;
+    private List<GameObject> UIList = new List<GameObject>();
+    private GameObject currentUI;
+
+    // ê²Œì„ ë§¤ë‹ˆì €ê°€ í”Œë ˆì´ì–´ë¥¼ ì°¸ì¡°í•˜ë„ë¡ í•©ë‹ˆë‹¤.
     private GameObject player;
     public GameObject Player
     {
@@ -33,9 +41,9 @@ public class GameManager : Singleton<GameManager>
             return player;
         }
     }
-    // ¹Ù·Î ÀÌÀü¿¡ ¿­·È´ø ¾ÀÀÇ ÀÎµ¦½º¸¦ ÀúÀåÇÕ´Ï´Ù. ÃÖÃÊ -1
+    // ë°”ë¡œ ì´ì „ì— ì—´ë ¸ë˜ ì”¬ì˜ ì¸ë±ìŠ¤ë¥¼ ì €ì¥í•©ë‹ˆë‹¤. ìµœì´ˆ -1
     private int lastOpenedSceneIndex;
-    // ÇöÀç ¿­·ÁÀÖ´Â ¾ÀÀÇ ÀÎµ¦½º¸¦ ÀúÀåÈü´Ï´Ù.
+    // í˜„ì¬ ì—´ë ¤ìˆëŠ” ì”¬ì˜ ì¸ë±ìŠ¤ë¥¼ ì €ì¥í™ë‹ˆë‹¤.
     private int currentSceneIndex;
     public string GameTitle {  get { return gameTitle; } }
     public bool IsGameOver { get { return isGameOver; } }
@@ -43,7 +51,7 @@ public class GameManager : Singleton<GameManager>
     public int LastOpendSceneIndex { get { return lastOpenedSceneIndex; } }
     public int CurrentSceneIndex {  get { return currentSceneIndex; } }
     
-    // ÇöÀç °ÔÀÓ¿¡ ºôµåµÇ¾î ÀÖ´Â ¾ÀÀÇ °³¼ö¸¦ °¡Á®¿É´Ï´Ù.
+    // í˜„ì¬ ê²Œì„ì— ë¹Œë“œë˜ì–´ ìˆëŠ” ì”¬ì˜ ê°œìˆ˜ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
     private int SceneLength => SceneManager.sceneCountInBuildSettings;
     private void Awake()
     {
@@ -55,17 +63,42 @@ public class GameManager : Singleton<GameManager>
     }
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            LoadNextScene();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GameOver();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            LevelClear();
+        }
     }
-    // °ÔÀÓ ¸Å´ÏÀú ¼¼ÆÃÀ» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+    // ê²Œì„ ë§¤ë‹ˆì € ì„¸íŒ…ì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
     public void Init()
     {
         ScoreSet(0);
         isGameOver = false;
         lastOpenedSceneIndex = -1;
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        UIInit(pauseUI);
+        UIInit(gameOverUI);
+        UIInit(levelClearUI);
     }
-    // ÁöÁ¤ÇÑ ÀÎµ¦½ºÀÇ ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
+    private void UIInit(GameObject UI)
+    {
+        currentUI = Instantiate(UI);
+        DontDestroyOnLoad(currentUI);
+        currentUI.SetActive(false);
+        UIList.Add(currentUI);
+    }
+    // ì§€ì •í•œ ì¸ë±ìŠ¤ì˜ ì”¬ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.
     public void LoadScene(int index)
     {
         if (index < 0 || index >= SceneLength)
@@ -77,7 +110,7 @@ public class GameManager : Singleton<GameManager>
         currentSceneIndex = index;
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
-    // ÁöÁ¤ÇÑ ÀÌ¸§ÀÇ ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
+    // ì§€ì •í•œ ì´ë¦„ì˜ ì”¬ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.
     public void LoadScene(string name)
     {
         player = null;
@@ -85,9 +118,9 @@ public class GameManager : Singleton<GameManager>
         currentSceneIndex = SceneManager.GetSceneByName(name).buildIndex;
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
-    // °¡Àå ¸¶Áö¸·¿¡ ¿­·È´ø ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
-    // ÇöÀç 3¹ø ¾ÀÀÌ°í, ÀÌÀü¿¡ 1¹ø ¾ÀÀÌ¾ú´Ù¸é, 1¹ø ¾ÀÀ¸·Î ÀÌµ¿ÇÏ°í
-    // °¡Àå ¸¶Áö¸·¿© ¿­·È´ø ¾ÀÀ» 3¹ø ¾ÀÀ¸·Î ÇÕ´Ï´Ù.
+    // ê°€ì¥ ë§ˆì§€ë§‰ì— ì—´ë ¸ë˜ ì”¬ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.
+    // í˜„ì¬ 3ë²ˆ ì”¬ì´ê³ , ì´ì „ì— 1ë²ˆ ì”¬ì´ì—ˆë‹¤ë©´, 1ë²ˆ ì”¬ìœ¼ë¡œ ì´ë™í•˜ê³ 
+    // ê°€ì¥ ë§ˆì§€ë§‰ì—¬ ì—´ë ¸ë˜ ì”¬ì„ 3ë²ˆ ì”¬ìœ¼ë¡œ í•©ë‹ˆë‹¤.
     public void LoadLastOpenedScene()
     {
         if (lastOpenedSceneIndex == -1)
@@ -101,10 +134,11 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadSceneAsync(currentSceneIndex);
 
     }
-    // ÇöÀç ¹Ù·Î ´ÙÀ½ ÀÎµ¦½ºÀÇ ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
-    // ¿¹¸¦ µé¾î, 1¹ø ¾À¿¡¼­ 2¹ø ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
+    // í˜„ì¬ ë°”ë¡œ ë‹¤ìŒ ì¸ë±ìŠ¤ì˜ ì”¬ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.
+    // ì˜ˆë¥¼ ë“¤ì–´, 1ë²ˆ ì”¬ì—ì„œ 2ë²ˆ ì”¬ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.
     public void LoadNextScene()
     {
+        Debug.Log(currentSceneIndex);
         if (currentSceneIndex == SceneLength - 1)
         {
             return;
@@ -114,8 +148,8 @@ public class GameManager : Singleton<GameManager>
         currentSceneIndex++;
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
-    // ÇöÀç ¹Ù·Î ´ÙÀ½ ÀÎµ¦½ºÀÇ ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
-    // ¿¹¸¦ µé¾î, 2¹ø ¾À¿¡¼­ 1¹ø ¾ÀÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.
+    // í˜„ì¬ ë°”ë¡œ ë‹¤ìŒ ì¸ë±ìŠ¤ì˜ ì”¬ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.
+    // ì˜ˆë¥¼ ë“¤ì–´, 2ë²ˆ ì”¬ì—ì„œ 1ë²ˆ ì”¬ìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.
     public void LoadPreviousScene()
     {
         if (currentSceneIndex == 0)
@@ -127,10 +161,18 @@ public class GameManager : Singleton<GameManager>
         currentSceneIndex--;
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
+    public void RestartLevel()
+    {
+        LoadScene(currentSceneIndex);
+    }
+    public void RestartGame()
+    {
+        LoadScene(1);
+    }
 
-    // ÁöÁ¤ÇÑ Á¤¼ö¸¸Å­ Á¡¼ö¸¦ ¿Ã¸³´Ï´Ù.
-    // ¸Å°³º¯¼ö ¹Ì¼³Á¤ ½Ã 1À» Áõ°¡½ÃÅµ´Ï´Ù.
-    // Á¡¼ö´Â maxScoreº¸´Ù Ä¿Áú ¼ö ¾ø½À´Ï´Ù.
+    // ì§€ì •í•œ ì •ìˆ˜ë§Œí¼ ì ìˆ˜ë¥¼ ì˜¬ë¦½ë‹ˆë‹¤.
+    // ë§¤ê°œë³€ìˆ˜ ë¯¸ì„¤ì • ì‹œ 1ì„ ì¦ê°€ì‹œí‚µë‹ˆë‹¤.
+    // ì ìˆ˜ëŠ” maxScoreë³´ë‹¤ ì»¤ì§ˆ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
     public void ScoreUp(int amount = 1)
     {
         if (amount < 0)
@@ -146,9 +188,9 @@ public class GameManager : Singleton<GameManager>
         score = nextScore;
     }
 
-    // ÁöÁ¤ÇÑ Á¤¼ö¸¸Å­ Á¡¼ö¸¦ ³»¸³´Ï´Ù.
-    // ¸Å°³º¯¼ö ¹Ì¼³Á¤ ½Ã 1À» °¨¼Ò½ÃÅµ´Ï´Ù.
-    // Á¡¼ö´Â 0 º¸´Ù ÀÛ¾ÆÁú ¼ö ¾ø½À´Ï´Ù.
+    // ì§€ì •í•œ ì •ìˆ˜ë§Œí¼ ì ìˆ˜ë¥¼ ë‚´ë¦½ë‹ˆë‹¤.
+    // ë§¤ê°œë³€ìˆ˜ ë¯¸ì„¤ì • ì‹œ 1ì„ ê°ì†Œì‹œí‚µë‹ˆë‹¤.
+    // ì ìˆ˜ëŠ” 0 ë³´ë‹¤ ì‘ì•„ì§ˆ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
     public void ScoreDown(int amount = 1)
     {
         if (amount < 0)
@@ -164,24 +206,34 @@ public class GameManager : Singleton<GameManager>
         score = nextScore;
     }
 
-    // ÁöÁ¤µÈ Á¤¼ö·Î Á¡¼ö¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+    // ì§€ì •ëœ ì •ìˆ˜ë¡œ ì ìˆ˜ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
     public void ScoreSet(int score)
     {
         this.score = score;
     }
 
-    // °ÔÀÓÀ» ¿À¹ö½ÃÅ°°í ÁöÁ¤µÈ ÀÌº¥Æ®¸¦ ½ÇÇàÇÕ´Ï´Ù.
+    // ê²Œì„ì„ ì˜¤ë²„ì‹œí‚¤ê³  ì§€ì •ëœ ì´ë²¤íŠ¸ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
     public void GameOver()
     {
-        isGameOver = true;
-        gameOverEvent?.Invoke();
+        currentUI = UIList[1];
+        currentUI.SetActive(true);
+        Time.timeScale = 0.0f;
     }
-    public void GameClear()
+    public void LevelClear()
     {
-
+        currentUI = UIList[2];
+        currentUI.SetActive(true);
+        Time.timeScale = 0.0f;
     }
     public void Pause()
     {
-
+        currentUI = UIList[0];
+        currentUI.SetActive(true);
+        Time.timeScale = 0.0f;
+    }
+    public void ExitUI()
+    {
+        currentUI.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 }
