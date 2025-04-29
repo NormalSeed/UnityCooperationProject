@@ -33,7 +33,6 @@ public class MonsterSpawner : MonoBehaviour
     public void SpawnMonster()
     {
         monster = (PooledMonster)monsterPool.GetObject(transform.position, transform.rotation);
-        Debug.Log($"{monster}가 플레이어를 쫓아갑니다");
     }
     IEnumerator SpawnCoroutine()
     {
