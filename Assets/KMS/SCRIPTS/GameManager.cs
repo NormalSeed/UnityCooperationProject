@@ -72,7 +72,7 @@ public class GameManager : Singleton<GameManager>
             }
             else if (next > maxHealth)
             {
-                next = maxScore;
+                next = maxHealth;
             }
             health = next;
         }
