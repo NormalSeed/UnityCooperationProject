@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6356456123985732867}
-  - component: {fileID: -1764836040462432903}
+  - component: {fileID: 8073550679287731071}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1764836040462432903
+--- !u!114 &8073550679287731071
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,3 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c13f9a1a17ca5418a8da71205a5377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameTitle: BALL GAME
+  score: 0
+  maxScore: 0
+  haha: 0
+  gameOverUI: {fileID: 7166210187716250623, guid: d5ad268ab2118394798a9c81ef2e7d0c, type: 3}
+  pauseUI: {fileID: 7166210187716250623, guid: b9305ce652c6ad34fb8fd0ee62e362c1, type: 3}
+  levelClearUI: {fileID: 7166210187716250623, guid: 669c2f0722c7b0b4a9c27a171b6949b7, type: 3}
