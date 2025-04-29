@@ -13,41 +13,70 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private string gameTitle = "BALL GAME";
-    [SerializeField] private bool isGameOver;
     [SerializeField] private int score;
     [SerializeField] private int maxScore;
-    // 게임 오버 시에 실행될 이벤트들을 지정합니다.
-    [SerializeField] private UnityEvent onGameOver;
-    [SerializeField] public UnityEvent onPause;
-    [SerializeField] private UnityEvent onLevelClear;
-    [SerializeField] private UnityEvent scoreChangeEvent;
+    [SerializeField] private int health;
+    [SerializeField] private int maxHealth;
 
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private GameObject levelClearUI;
     private List<GameObject> UIList = new List<GameObject>();
     private GameObject currentUI;
+    private bool isUIOpend = false;
 
-    // 게임 매니저가 플레이어를 참조하도록 합니다.
-    private GameObject player;
-    public GameObject Player
-    {
-        get
-        {
-            if (player == null)
-            {
-                player = GameObject.FindGameObjectWithTag("player");
-            }
-            return player;
-        }
-    }
+    [SerializeField] public UnityEvent onGameOvered;
+    [SerializeField] public UnityEvent onHealthChanged;
+    [SerializeField] public UnityEvent onScoreChanged;
+
     // 바로 이전에 열렸던 씬의 인덱스를 저장합니다. 최초 -1
     private int lastOpenedSceneIndex;
     // 현재 열려있는 씬의 인덱스를 저장힙니다.
     private int currentSceneIndex;
+
     public string GameTitle {  get { return gameTitle; } }
-    public bool IsGameOver { get { return isGameOver; } }
-    public int Score { get { return score; } }
+    public int Score
+    {
+        get
+        {
+            return score;
+        }
+        set
+        {
+            onScoreChanged.Invoke();
+            int next = value;
+            if (next < 0)
+            {
+                next = 0;
+            }
+            else if (next > maxScore)
+            {
+                next = maxScore;
+            }
+            score = next;
+        }
+    }
+    public int Health
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            onHealthChanged.Invoke();
+            int next = value;
+            if (next < 0)
+            {
+                next = 0;
+            }
+            else if (next > maxHealth)
+            {
+                next = maxScore;
+            }
+            health = next;
+        }
+    }
     public int LastOpendSceneIndex { get { return lastOpenedSceneIndex; } }
     public int CurrentSceneIndex {  get { return currentSceneIndex; } }
     
@@ -67,10 +96,6 @@ public class GameManager : Singleton<GameManager>
         {
             Pause();
         }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            LoadNextScene();
-        }
         if (Input.GetKeyDown(KeyCode.O))
         {
             GameOver();
@@ -83,14 +108,16 @@ public class GameManager : Singleton<GameManager>
     // 게임 매니저 세팅을 초기화합니다.
     public void Init()
     {
-        ScoreSet(0);
-        isGameOver = false;
+        score = 0;
+        health = maxHealth;
         lastOpenedSceneIndex = -1;
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         UIInit(pauseUI);
         UIInit(gameOverUI);
         UIInit(levelClearUI);
     }
+    // 게임 매니저 초기화 시에 호출되는 함수로
+    // 필요한 UI를 불러와 사라지지 않도록 만들고, UI 리스트에 추가합니다.
     private void UIInit(GameObject UI)
     {
         currentUI = Instantiate(UI);
@@ -105,7 +132,6 @@ public class GameManager : Singleton<GameManager>
         {
             return;
         }
-        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = index;
         SceneManager.LoadSceneAsync(currentSceneIndex);
@@ -113,7 +139,6 @@ public class GameManager : Singleton<GameManager>
     // 지정한 이름의 씬으로 이동합니다.
     public void LoadScene(string name)
     {
-        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = SceneManager.GetSceneByName(name).buildIndex;
         SceneManager.LoadSceneAsync(currentSceneIndex);
@@ -130,7 +155,6 @@ public class GameManager : Singleton<GameManager>
         int temp = currentSceneIndex;
         currentSceneIndex = lastOpenedSceneIndex;
         lastOpenedSceneIndex = temp;
-        player = null;
         SceneManager.LoadSceneAsync(currentSceneIndex);
 
     }
@@ -143,7 +167,6 @@ public class GameManager : Singleton<GameManager>
         {
             return;
         }
-        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex++;
         SceneManager.LoadSceneAsync(currentSceneIndex);
@@ -156,7 +179,6 @@ public class GameManager : Singleton<GameManager>
         {
             return;
         }
-        player = null;
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex--;
         SceneManager.LoadSceneAsync(currentSceneIndex);
@@ -170,51 +192,15 @@ public class GameManager : Singleton<GameManager>
         LoadScene(1);
     }
 
-    // 지정한 정수만큼 점수를 올립니다.
-    // 매개변수 미설정 시 1을 증가시킵니다.
-    // 점수는 maxScore보다 커질 수 없습니다.
-    public void ScoreUp(int amount = 1)
-    {
-        if (amount < 0)
-        {
-            amount = 0;
-        }
-        int nextScore = score + amount;
-        if (nextScore >= maxScore)
-        {
-            score = maxScore;
-            return;
-        }
-        score = nextScore;
-    }
-
-    // 지정한 정수만큼 점수를 내립니다.
-    // 매개변수 미설정 시 1을 감소시킵니다.
-    // 점수는 0 보다 작아질 수 없습니다.
-    public void ScoreDown(int amount = 1)
-    {
-        if (amount < 0)
-        {
-            amount = 0;
-        }
-        int nextScore = score - amount;
-        if (nextScore <= 0)
-        {
-            score = 0;
-            return;
-        }
-        score = nextScore;
-    }
-
-    // 지정된 정수로 점수를 설정합니다.
-    public void ScoreSet(int score)
-    {
-        this.score = score;
-    }
-
     // 게임을 정지시키고 게임오버 UI를 활성화합니다.
     public void GameOver()
     {
+        if ( currentSceneIndex == 0 || isUIOpend == true)
+        {
+            return;
+        }
+        isUIOpend = true;
+        onGameOvered.Invoke();
         currentUI = UIList[1];
         currentUI.SetActive(true);
         Time.timeScale = 0.0f;
@@ -222,12 +208,22 @@ public class GameManager : Singleton<GameManager>
     // 게임을 정지시키고 레벨 클리어 UI를 활성화합니다.
     public void LevelClear()
     {
+        if (currentSceneIndex == 0 || isUIOpend == true)
+        {
+            return;
+        }
+        isUIOpend = true;
         currentUI = UIList[2];
         currentUI.SetActive(true);
         Time.timeScale = 0.0f;
     }// 게임을 정지시키고 일시정지 UI를 활성화합니다.
     public void Pause()
     {
+        if (currentSceneIndex == 0 || isUIOpend == true)
+        {
+            return;
+        }
+        isUIOpend = true;
         currentUI = UIList[0];
         currentUI.SetActive(true);
         Time.timeScale = 0.0f;
@@ -236,6 +232,7 @@ public class GameManager : Singleton<GameManager>
     // 시간을 다시 재개시킵니다.
     public void ExitUI()
     {
+        isUIOpend = false;
         currentUI.SetActive(false);
         Time.timeScale = 1.0f;
     }
