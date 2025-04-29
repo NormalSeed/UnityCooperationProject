@@ -8,6 +8,7 @@ public class Testplayercontroll : MonoBehaviour
     [SerializeField] private Rigidbody rigid;
     [SerializeField] private float playerSpeed;
     [SerializeField] private int attack;
+    [SerializeField] private int score;
 
     private Vector3 inputVec;
     void Update()
@@ -37,5 +38,10 @@ public class Testplayercontroll : MonoBehaviour
     {
         playerSpeed += amount;
         Debug.Log("스피드" + playerSpeed);
+    }
+    public void IncreaseScore(int amount)
+    {
+        score += amount;
+        Debug.Log("점수" + score);
     }
 }
