@@ -640,7 +640,8 @@ MonoBehaviour:
   playerSpeed: 3
   attack: 10
   score: 30
-  Hp: 5
+  maxHp: 5
+  currentHp: 4
 --- !u!1001 &209021693501037384
 PrefabInstance:
   m_ObjectHideFlags: 0

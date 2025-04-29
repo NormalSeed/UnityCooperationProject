@@ -47,9 +47,17 @@ public class Testplayercontroll : MonoBehaviour
         Debug.Log("점수" + score);
     }
 
-    public void Heal(int amount)
+    public bool Heal(int amount)
     {
+        if(currentHp >= maxHp)
+        {
+            Debug.Log("체력이 가득찼습니다.");
+            return false;
+        }
         currentHp += amount;
+        if (currentHp > maxHp)
+            currentHp = maxHp;
         Debug.Log($"현재 체력: {currentHp}/{maxHp}");
+        return true;
     }
 }
