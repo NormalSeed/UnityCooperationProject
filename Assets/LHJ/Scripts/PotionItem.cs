@@ -5,6 +5,7 @@ using UnityEngine;
 public class PotionItem : Item
 {
     [SerializeField] private int heal;
+    [SerializeField] private GameObject healEffect;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -21,6 +22,11 @@ public class PotionItem : Item
             bool healed = playerController.Heal(heal);
             if (healed)
             {
+                if (healEffect != null)
+                {
+                    GameObject effect = Instantiate(healEffect, player.transform.position, Quaternion.identity);
+                    Destroy(effect, 3f);
+                }
                 Destroy(gameObject);
             }
             else
