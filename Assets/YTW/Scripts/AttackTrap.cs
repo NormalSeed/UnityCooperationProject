@@ -97,5 +97,4 @@ public class AttackTrap : MonoBehaviour
             }
         }
     }
-
 }
