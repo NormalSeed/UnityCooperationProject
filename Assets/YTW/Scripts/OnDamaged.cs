@@ -10,7 +10,7 @@ public class OnDamaged : MonoBehaviour
     public void TakeDamaged(int damage)
     {
         hp -= damage;
-
+        Debug.Log("공격");
         if (hp <= 0)
         {
             Destroy(gameObject);

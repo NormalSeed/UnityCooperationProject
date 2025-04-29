@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,16 +7,43 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private MonsterAttack attack;
 
-    void Start()
+    void Awake()
     {
         Init();
     }
 
     void Init()
     {
-        monster = GetComponent<NavMeshAgent>();
-        attack = GetComponent<MonsterAttack>();
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (monster == null)
+        {
+            monster = GetComponent<NavMeshAgent>();
+            if (monster == null)
+            {
+                return; 
+            }
+        }
+
+        if (attack == null)
+        {
+            attack = GetComponent<MonsterAttack>();
+            if (attack == null)
+            {
+                return;
+            }
+        }
+
+        if (target == null)
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                target = playerObject.transform;
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 
     // Update is called once per frame
