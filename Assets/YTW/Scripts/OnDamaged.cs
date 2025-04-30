@@ -41,10 +41,15 @@ public class OnDamaged : MonoBehaviour
         Debug.Log($"{damage}데미지 받아서 현재 채력 {CurHP}");
         if (CurHP <= 0)
         {
+            // 테스트용 코드
+            if (gameObject.CompareTag("Player"))
+            {
+                Destroy(gameObject);
+            }
             if (pooledMonster != null)
             {
-                pooledMonster.ReturnPool();
                 gameObject.SetActive(false);
+                pooledMonster.ReturnPool();
             }
             else
             {

@@ -5,14 +5,14 @@ public class MonsterController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent monster;
     [SerializeField] private Transform target;
-    [SerializeField] private MonsterAttack attack;
-  
-    void Awake()
+    private IAttackable attackable;
+
+    private void OnEnable()
     {
         Init();
     }
 
-    void Init()
+    private void Init()
     {
         if (monster == null)
         {
@@ -23,48 +23,67 @@ public class MonsterController : MonoBehaviour
             }
         }
 
-        if (attack == null)
+        if (attackable == null)
         {
-            attack = GetComponent<MonsterAttack>();
-            if (attack == null)
-            {
-                return;
-            }
+            if (CompareTag("Melee"))
+                attackable = GetComponent<MeleeAttack>();
+            else if (CompareTag("Ranged"))
+                attackable = GetComponent<RangedAttack>();
+            return;
         }
 
-        if (target == null)
+        InitTarget();
+    }
+
+    private void InitTarget()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
         {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
+            target = playerObject.transform;
+            if (monster != null)
             {
-                target = playerObject.transform;
+                monster.isStopped = false;
             }
-            else
+        }
+        else
+        {
+            target = null;
+            if (monster != null)
             {
-                return;
+                monster.isStopped = true;
             }
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
         DetectPlayer();
     }
 
-    void DetectPlayer()
+    private void DetectPlayer()
     {
-        if (target != null)
+        if (target == null)
         {
-            monster.SetDestination(target.position);
-            if (attack.CanAttack(target))
+            if (monster != null)
             {
-                attack.Attack(target);
+                monster.isStopped = true;
             }
-            else
-            {
-
-            }
+            InitTarget();
+            return;
         }
+
+            monster.isStopped = false;
+            monster.SetDestination(target.position);
+
+            if (attackable.CanAttack(target))
+            {
+                attackable.Attack(target);
+            }
+        
     }
 }

@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class MonsterAttack : MonoBehaviour
+public class MeleeAttack : MonoBehaviour, IAttackable
 {
-    // 가상 플레이어
     [SerializeField] int damage;
     [SerializeField] float attackRange;
     [SerializeField] float attackCoolTime;
@@ -10,11 +9,11 @@ public class MonsterAttack : MonoBehaviour
 
     private float lastAttackTime;
 
-
     public bool CanAttack(Transform target)
     {
+        // 타겟과의 거리
         float distance = Vector3.Distance(transform.position, target.position);
-        // 몬스터와 플레이어 거리가 사정거리내이고, 현재시간이 마지막 공격시간(그때 현재시간) + 공격쿨타임보다 크다면 공격이 가능(true)
+        // 타겟과의 거리가 사정거리내이고, 현재시간이 마지막 공격시간(그때 현재시간) + 공격쿨타임보다 크다면 공격이 가능(true)
         return distance < attackRange && Time.time >= lastAttackTime + attackCoolTime;
     }
 
