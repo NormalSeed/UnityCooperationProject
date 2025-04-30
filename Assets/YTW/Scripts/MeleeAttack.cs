@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonsterAttack : MonoBehaviour
+public class MeleeAttack : MonoBehaviour, IAttackable
 {
     [SerializeField] int damage;
     [SerializeField] float attackRange;

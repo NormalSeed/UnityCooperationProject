@@ -5,7 +5,7 @@ public class MonsterController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent monster;
     [SerializeField] private Transform target;
-    [SerializeField] private MonsterAttack attack;
+    private IAttackable attackable;
 
     private void OnEnable()
     {
@@ -23,13 +23,13 @@ public class MonsterController : MonoBehaviour
             }
         }
 
-        if (attack == null)
+        if (attackable == null)
         {
-            attack = GetComponent<MonsterAttack>();
-            if (attack == null)
-            {
-                return;
-            }
+            if (CompareTag("Melee"))
+                attackable = GetComponent<MeleeAttack>();
+            else if (CompareTag("Ranged"))
+                attackable = GetComponent<RangedAttack>();
+            return;
         }
 
         InitTarget();
@@ -80,9 +80,9 @@ public class MonsterController : MonoBehaviour
             monster.isStopped = false;
             monster.SetDestination(target.position);
 
-            if (attack.CanAttack(target))
+            if (attackable.CanAttack(target))
             {
-                attack.Attack(target);
+                attackable.Attack(target);
             }
         
     }
