@@ -5,9 +5,10 @@ using UnityEngine;
 public class PropellerRatator : MonoBehaviour
 {
     [SerializeField] float rotationSpd;
-
+    private Rigidbody rigidBody;
     private void FixedUpdate()
     {
-        gameObject.transform.Rotate(Vector3.up * rotationSpd);
+        rigidBody = GetComponent<Rigidbody>();
+        rigidBody.angularVelocity = Vector3.up * rotationSpd;
     }
 }
