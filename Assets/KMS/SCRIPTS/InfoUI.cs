@@ -17,7 +17,7 @@ public class InfoUI : MonoBehaviour
     public void UpdateInfo()
     {
         stageName.text = $"Stage : {StageManager.Instance.StageName}";
-        score.text = $"{StageManager.Instance.StageScore} / {StageManager.Instance.MaxStageScore}";
+        score.text = $"Score : {StageManager.Instance.StageScore} / {StageManager.Instance.MaxStageScore}";
     }
 }
 
