@@ -27,6 +27,7 @@ public class PotionItem : Item
                 if (healEffect != null)
                 {
                     GameObject effect = Instantiate(healEffect, player.transform.position, Quaternion.identity);
+                    effect.transform.SetParent(player.transform);
                     Destroy(effect, 3f);    // 3초동안 이펙트 생성되고 이후 삭제
                 }
                 Destroy(gameObject);

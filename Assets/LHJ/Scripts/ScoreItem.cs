@@ -27,6 +27,7 @@ public class ScoreItem : Item
             if (scoreEffect != null)
             {
                 GameObject effect = Instantiate(scoreEffect, player.transform.position, Quaternion.identity);
+                effect.transform.SetParent(player.transform);
                 Destroy(effect, 3f);       // 3초동안 실행되고 그 후 이펙트 삭제
             }
         }
