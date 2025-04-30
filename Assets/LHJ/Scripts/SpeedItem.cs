@@ -28,7 +28,7 @@ public class SpeedItem : Item
             {
                 GameObject effect = Instantiate(speedupEffect, player.transform.position, Quaternion.identity);
                 effect.transform.SetParent(player.transform);
-                Destroy(effect, 5f);  // 5초동안 이펙트가 실행되고 그 후 이펙트 삭제
+                Destroy(effect, buffTime);  // 버프 시간 동안 이펙트가 실행되고 그 후 이펙트 삭제
             }
         }
         Destroy(gameObject);
