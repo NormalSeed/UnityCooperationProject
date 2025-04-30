@@ -5,8 +5,8 @@ using UnityEngine.AI;
 public class AttackTrap : MonoBehaviour
 {
     [SerializeField] int damage;
-    [SerializeField] float attackCoolTime = 1.0f;
-    [SerializeField] float speedDebuffPercent = 0.3f;
+    [SerializeField] float attackCoolTime;
+    [SerializeField] float speedDebuffPercent;
 
     private List<MonsterController> monstersInTrap = new List<MonsterController>();
     private Dictionary<MonsterController, float> lastAttackTimes = new Dictionary<MonsterController, float>();
@@ -52,14 +52,13 @@ public class AttackTrap : MonoBehaviour
         {
             if(monster != null && monstersInTrap.Contains(monster))
             {
-                monstersInTrap.Remove(monster);
-                lastAttackTimes.Remove(monster);
-
                 NavMeshAgent agent = monster.GetComponent<NavMeshAgent>();
                 if (agent != null && originalSpeeds.ContainsKey(monster))
                 {
                     agent.speed = originalSpeeds[monster];
                 }
+                monstersInTrap.Remove(monster);
+                lastAttackTimes.Remove(monster);
             }
             Debug.Log("몬스터가 트랩에서 나감");
         }
@@ -79,10 +78,16 @@ public class AttackTrap : MonoBehaviour
             MonsterController monster = monstersInTrap[i];
             if (monster == null || !monster.gameObject.activeInHierarchy)
             {
+                NavMeshAgent agent = monster?.GetComponent<NavMeshAgent>();
+                if (agent != null && originalSpeeds.ContainsKey(monster))
+                {
+                    agent.speed = originalSpeeds[monster]; 
+                }
+
                 monstersInTrap.RemoveAt(i);
                 lastAttackTimes.Remove(monster);
                 originalSpeeds.Remove(monster);
-                Debug.Log("리스트내 죽은 몬스터 제거");
+                Debug.Log("리스트내 죽은 몬스터 제거 및 속도 복구");
                 continue;
             }
 
