@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1358864425007005842}
   - component: {fileID: 4990475817437528817}
   - component: {fileID: 363780452218363608}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Monster
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -55,7 +55,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monster: {fileID: 851230375622295861}
   target: {fileID: 0}
-  attack: {fileID: 8835741397035573319}
 --- !u!114 &8835741397035573319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +70,6 @@ MonoBehaviour:
   damage: 1
   attackRange: 2.5
   attackCoolTime: 2
-  monster: {fileID: 0}
 --- !u!114 &8038378076852066092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +95,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 267784823911285768}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 1.5
   m_Speed: 10
   m_Acceleration: 20
   avoidancePriority: 50
@@ -382,8 +380,20 @@ PrefabInstance:
       value: HealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 2399729500429824451, guid: 6384e1a90c7a0c541829f8b6cd5dd6e7, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2399729500429824451, guid: 6384e1a90c7a0c541829f8b6cd5dd6e7, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4591027474803729711, guid: 6384e1a90c7a0c541829f8b6cd5dd6e7, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455049826053916914, guid: 6384e1a90c7a0c541829f8b6cd5dd6e7, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5869345540215197423, guid: 6384e1a90c7a0c541829f8b6cd5dd6e7, type: 3}
       propertyPath: m_Pivot.x
