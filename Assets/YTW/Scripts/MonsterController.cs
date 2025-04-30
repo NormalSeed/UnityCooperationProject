@@ -6,13 +6,13 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private NavMeshAgent monster;
     [SerializeField] private Transform target;
     [SerializeField] private MonsterAttack attack;
-  
-    void Awake()
+
+    private void OnEnable()
     {
         Init();
     }
 
-    void Init()
+    private void Init()
     {
         if (monster == null)
         {
@@ -32,21 +32,31 @@ public class MonsterController : MonoBehaviour
             }
         }
 
-        if (target == null)
+        InitTarget();
+    }
+
+    private void InitTarget()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
         {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
+            target = playerObject.transform;
+            if (monster != null)
             {
-                target = playerObject.transform;
+                monster.isStopped = false;
             }
-            else
+        }
+        else
+        {
+            target = null;
+            if (monster != null)
             {
-                return;
+                monster.isStopped = true;
             }
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (!gameObject.activeInHierarchy)
         {
@@ -55,19 +65,25 @@ public class MonsterController : MonoBehaviour
         DetectPlayer();
     }
 
-    void DetectPlayer()
+    private void DetectPlayer()
     {
-        if (target != null)
+        if (target == null)
         {
+            if (monster != null)
+            {
+                monster.isStopped = true;
+            }
+            InitTarget();
+            return;
+        }
+
+            monster.isStopped = false;
             monster.SetDestination(target.position);
+
             if (attack.CanAttack(target))
             {
                 attack.Attack(target);
             }
-            else
-            {
-                return;
-            }
-        }
+        
     }
 }
