@@ -5,15 +5,38 @@ using UnityEngine;
 public class TestBuffText : MonoBehaviour
 {
     public GameObject attackBuffText;
+    public GameObject speedBuffText;
+    public GameObject scoreText;
+    public GameObject healText;
+    public GameObject healFailText;
 
-    public void ShowAttackBuff(float buffTime)
+    public void ShowBuff(string type, float buffTime)
     {
-        StartCoroutine(TempText(buffTime));
+        if(type == "Attack")
+        {
+            StartCoroutine(TempText(attackBuffText, buffTime));
+        }
+        else if(type == "Speed")
+        {
+            StartCoroutine(TempText(speedBuffText, buffTime));
+        }
+        else if(type == "Score")
+        {
+            StartCoroutine(TempText(scoreText, buffTime));
+        }
+        else if(type == "Heal")
+        {
+            StartCoroutine(TempText(healText, buffTime));
+        }
     }
-    private IEnumerator TempText(float buffTime)
+    private IEnumerator TempText(GameObject buffText, float buffTime)
     {
-        attackBuffText.SetActive(true);
+        buffText.SetActive(true);
         yield return new WaitForSeconds(buffTime);
-        attackBuffText.SetActive(false);
+        buffText.SetActive(false);
+    }
+    public void ShowHealFail(float time = 2f)
+    {
+        StartCoroutine(TempText(healFailText, time));
     }
 }
