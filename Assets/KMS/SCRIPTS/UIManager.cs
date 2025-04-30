@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -10,8 +11,11 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private GameObject levelClearUI;
+
+    [SerializeField] private GameObject infoUI;
     private List<GameObject> UIList = new List<GameObject>();
     private GameObject currentUI;
+    private GameObject info;
     private bool isUIOpend = false;
     private void Awake()
     {
@@ -20,6 +24,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         Init();
+        GameManager.Instance.onSceneLoaded.AddListener(ToggleInfoUI);
     }
     private void Update()
     {
@@ -30,6 +35,9 @@ public class UIManager : Singleton<UIManager>
         UIInit(pauseUI);
         UIInit(gameOverUI);
         UIInit(levelClearUI);
+        info = Instantiate(infoUI);
+        DontDestroyOnLoad(info);
+        info.SetActive(false);
     }
     // 게임 매니저 초기화 시에 호출되는 함수로
     // 필요한 UI를 불러와 사라지지 않도록 만들고, UI 리스트에 추가합니다.
@@ -79,5 +87,16 @@ public class UIManager : Singleton<UIManager>
         Time.timeScale = 1.0f;
         isUIOpend = false;
         currentUI.SetActive(false);
+    }
+    public void ToggleInfoUI(int SceneIndex)
+    {
+        if (info.activeSelf && SceneIndex == 0)
+        {
+            info.SetActive(false);
+        }
+        else if (!info.activeSelf && SceneIndex != 0)
+        {
+            info.SetActive(true);
+        }
     }
 }

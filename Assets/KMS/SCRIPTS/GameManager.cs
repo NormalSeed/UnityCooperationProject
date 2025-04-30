@@ -13,8 +13,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private string gameTitle = "BALL GAME";
-    [SerializeField] private int score;
-    [SerializeField] private int maxScore;
     [SerializeField] private int health;
     [SerializeField] private int maxHealth;
 
@@ -22,7 +20,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] public UnityEvent onLevelCleared;
     [SerializeField] public UnityEvent onHealthChanged;
     [SerializeField] public UnityEvent onScoreChanged;
-    [SerializeField] public UnityEvent onSceneLoaded;
+    [SerializeField] public UnityEvent<int> onSceneLoaded;
 
     // 바로 이전에 열렸던 씬의 인덱스를 저장합니다. 최초 -1
     private int lastOpenedSceneIndex;
@@ -30,27 +28,6 @@ public class GameManager : Singleton<GameManager>
     private int currentSceneIndex;
 
     public string GameTitle {  get { return gameTitle; } }
-    public int Score
-    {
-        get
-        {
-            return score;
-        }
-        set
-        {
-            onScoreChanged.Invoke();
-            int next = value;
-            if (next < 0)
-            {
-                next = 0;
-            }
-            else if (next > maxScore)
-            {
-                next = maxScore;
-            }
-            score = next;
-        }
-    }
     public int Health
     {
         get
@@ -99,11 +76,14 @@ public class GameManager : Singleton<GameManager>
         {
             LevelClear();
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GotoTitle();
+        }
     }
     // 게임 매니저 세팅을 초기화합니다.
     public void Init()
     {
-        score = 0;
         health = maxHealth;
         lastOpenedSceneIndex = -1;
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -117,7 +97,7 @@ public class GameManager : Singleton<GameManager>
         }
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = index;
-        onSceneLoaded?.Invoke();
+        onSceneLoaded?.Invoke(currentSceneIndex);
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     // 지정한 이름의 씬으로 이동합니다.
@@ -125,7 +105,7 @@ public class GameManager : Singleton<GameManager>
     {
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = SceneManager.GetSceneByName(name).buildIndex;
-        onSceneLoaded?.Invoke();
+        onSceneLoaded?.Invoke(currentSceneIndex);
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     // 가장 마지막에 열렸던 씬으로 이동합니다.
@@ -140,7 +120,7 @@ public class GameManager : Singleton<GameManager>
         int temp = currentSceneIndex;
         currentSceneIndex = lastOpenedSceneIndex;
         lastOpenedSceneIndex = temp;
-        onSceneLoaded?.Invoke();
+        onSceneLoaded?.Invoke(currentSceneIndex);
         SceneManager.LoadSceneAsync(currentSceneIndex);
 
     }
@@ -155,7 +135,7 @@ public class GameManager : Singleton<GameManager>
         }
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex++;
-        onSceneLoaded?.Invoke();
+        onSceneLoaded?.Invoke(currentSceneIndex);
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     // 현재 바로 다음 인덱스의 씬으로 이동합니다.
@@ -168,7 +148,7 @@ public class GameManager : Singleton<GameManager>
         }
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex--;
-        onSceneLoaded?.Invoke();
+        onSceneLoaded?.Invoke(currentSceneIndex);
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     public void RestartLevel()
@@ -178,6 +158,10 @@ public class GameManager : Singleton<GameManager>
     public void RestartGame()
     {
         LoadScene(1);
+    }
+    public void GotoTitle()
+    {
+        LoadScene(0);
     }
     public void GameOver()
     {

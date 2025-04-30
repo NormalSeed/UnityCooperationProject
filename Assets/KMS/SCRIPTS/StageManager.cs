@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class StageManager : Singleton<StageManager>
 {
     [SerializeField] string stageName;
-    [SerializeField] GameObject infoUI;
     [SerializeField] int maxStageScore;
     [SerializeField] int stageScore;
+    [SerializeField] List<string> stageNames;
+    [SerializeField] List<int> maxStageScores;
     public string StageName {  get { return stageName; } }
+    public int MaxStageScore { get { return maxStageScore; } }
 
-    private GameObject info;
+    [SerializeField] public UnityEvent onValueChanged;
+
     public int StageScore
     {
         get
@@ -37,6 +41,13 @@ public class StageManager : Singleton<StageManager>
     }
     private void Start()
     {
-        
+        GameManager.Instance.onSceneLoaded.AddListener(InitStageValues);
+    }
+    public void InitStageValues(int SceneIndex)
+    {
+        stageScore = 0;
+        stageName = stageNames[SceneIndex];
+        maxStageScore = maxStageScores[SceneIndex];
+        onValueChanged?.Invoke();
     }
 }
