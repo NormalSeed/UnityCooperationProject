@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6356456123985732867}
   - component: {fileID: 8073550679287731071}
+  - component: {fileID: 7055582746120181539}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -47,7 +48,35 @@ MonoBehaviour:
   gameTitle: BALL GAME
   score: 0
   maxScore: 0
-  haha: 0
+  health: 0
+  maxHealth: 0
+  onGameOvered:
+    m_PersistentCalls:
+      m_Calls: []
+  onLevelCleared:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onScoreChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7055582746120181539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333320273518583861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80480fe814f38342bcd4f070d1b2b78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   gameOverUI: {fileID: 7166210187716250623, guid: d5ad268ab2118394798a9c81ef2e7d0c, type: 3}
   pauseUI: {fileID: 7166210187716250623, guid: b9305ce652c6ad34fb8fd0ee62e362c1, type: 3}
   levelClearUI: {fileID: 7166210187716250623, guid: 669c2f0722c7b0b4a9c27a171b6949b7, type: 3}

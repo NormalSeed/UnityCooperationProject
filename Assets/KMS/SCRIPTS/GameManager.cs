@@ -18,16 +18,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private int health;
     [SerializeField] private int maxHealth;
 
-    [SerializeField] private GameObject gameOverUI;
-    [SerializeField] private GameObject pauseUI;
-    [SerializeField] private GameObject levelClearUI;
-    private List<GameObject> UIList = new List<GameObject>();
-    private GameObject currentUI;
-    private bool isUIOpend = false;
-
     [SerializeField] public UnityEvent onGameOvered;
+    [SerializeField] public UnityEvent onLevelCleared;
     [SerializeField] public UnityEvent onHealthChanged;
     [SerializeField] public UnityEvent onScoreChanged;
+    [SerializeField] public UnityEvent onSceneLoaded;
 
     // 바로 이전에 열렸던 씬의 인덱스를 저장합니다. 최초 -1
     private int lastOpenedSceneIndex;
@@ -112,18 +107,6 @@ public class GameManager : Singleton<GameManager>
         health = maxHealth;
         lastOpenedSceneIndex = -1;
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        UIInit(pauseUI);
-        UIInit(gameOverUI);
-        UIInit(levelClearUI);
-    }
-    // 게임 매니저 초기화 시에 호출되는 함수로
-    // 필요한 UI를 불러와 사라지지 않도록 만들고, UI 리스트에 추가합니다.
-    private void UIInit(GameObject UI)
-    {
-        currentUI = Instantiate(UI);
-        DontDestroyOnLoad(currentUI);
-        currentUI.SetActive(false);
-        UIList.Add(currentUI);
     }
     // 지정한 인덱스의 씬으로 이동합니다.
     public void LoadScene(int index)
@@ -134,6 +117,7 @@ public class GameManager : Singleton<GameManager>
         }
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = index;
+        onSceneLoaded?.Invoke();
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     // 지정한 이름의 씬으로 이동합니다.
@@ -141,6 +125,7 @@ public class GameManager : Singleton<GameManager>
     {
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex = SceneManager.GetSceneByName(name).buildIndex;
+        onSceneLoaded?.Invoke();
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     // 가장 마지막에 열렸던 씬으로 이동합니다.
@@ -155,6 +140,7 @@ public class GameManager : Singleton<GameManager>
         int temp = currentSceneIndex;
         currentSceneIndex = lastOpenedSceneIndex;
         lastOpenedSceneIndex = temp;
+        onSceneLoaded?.Invoke();
         SceneManager.LoadSceneAsync(currentSceneIndex);
 
     }
@@ -169,6 +155,7 @@ public class GameManager : Singleton<GameManager>
         }
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex++;
+        onSceneLoaded?.Invoke();
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     // 현재 바로 다음 인덱스의 씬으로 이동합니다.
@@ -181,6 +168,7 @@ public class GameManager : Singleton<GameManager>
         }
         lastOpenedSceneIndex = currentSceneIndex;
         currentSceneIndex--;
+        onSceneLoaded?.Invoke();
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
     public void RestartLevel()
@@ -191,49 +179,21 @@ public class GameManager : Singleton<GameManager>
     {
         LoadScene(1);
     }
-
-    // 게임을 정지시키고 게임오버 UI를 활성화합니다.
     public void GameOver()
     {
-        if ( currentSceneIndex == 0 || isUIOpend == true)
-        {
-            return;
-        }
-        isUIOpend = true;
-        onGameOvered.Invoke();
-        currentUI = UIList[1];
-        currentUI.SetActive(true);
         Time.timeScale = 0.0f;
+        onGameOvered?.Invoke();
+        UIManager.Instance.OpenGameOverUI();
     }
-    // 게임을 정지시키고 레벨 클리어 UI를 활성화합니다.
     public void LevelClear()
     {
-        if (currentSceneIndex == 0 || isUIOpend == true)
-        {
-            return;
-        }
-        isUIOpend = true;
-        currentUI = UIList[2];
-        currentUI.SetActive(true);
         Time.timeScale = 0.0f;
-    }// 게임을 정지시키고 일시정지 UI를 활성화합니다.
+        onLevelCleared?.Invoke();
+        UIManager.Instance.OpenLevelClearUI();
+    }
     public void Pause()
     {
-        if (currentSceneIndex == 0 || isUIOpend == true)
-        {
-            return;
-        }
-        isUIOpend = true;
-        currentUI = UIList[0];
-        currentUI.SetActive(true);
         Time.timeScale = 0.0f;
-    }
-    // UI를 비활성화시켜 UI에서 빠져나오는 함수입니다.
-    // 시간을 다시 재개시킵니다.
-    public void ExitUI()
-    {
-        isUIOpend = false;
-        currentUI.SetActive(false);
-        Time.timeScale = 1.0f;
+        UIManager.Instance.OpenPauseUI();
     }
 }
