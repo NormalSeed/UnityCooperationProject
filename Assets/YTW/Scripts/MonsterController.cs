@@ -46,9 +46,12 @@ public class MonsterController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
         DetectPlayer();
     }
 
@@ -63,7 +66,7 @@ public class MonsterController : MonoBehaviour
             }
             else
             {
-
+                return;
             }
         }
     }

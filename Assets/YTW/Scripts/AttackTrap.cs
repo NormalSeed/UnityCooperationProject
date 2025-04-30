@@ -34,6 +34,7 @@ public class AttackTrap : MonoBehaviour
             NavMeshAgent agent = monster.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
+                // 각 몬스터마다 속도 디버프를 적용
                 if (!originalSpeeds.ContainsKey(monster))
                 {
                     originalSpeeds[monster] = agent.speed;
