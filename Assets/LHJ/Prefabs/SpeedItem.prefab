@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3166901928651835272}
   - component: {fileID: 1535370372239903369}
   - component: {fileID: 3963402585570779720}
+  - component: {fileID: 7524299211020962818}
   m_Layer: 0
   m_Name: SpeedItem
   m_TagString: Untagged
@@ -105,3 +106,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7524299211020962818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6356538524141293383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b84a5f4bb18a337458908e64c0edec23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedIncrease: 2
+  buffTime: 5
+  speedupEffect: {fileID: 4306228554085981334, guid: 016afa9ba6078f843b4b5e909920dc85, type: 3}
