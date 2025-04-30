@@ -30,6 +30,11 @@ public class ScoreItem : Item
                 effect.transform.SetParent(player.transform);
                 Destroy(effect, 3f);       // 3초동안 실행되고 그 후 이펙트 삭제
             }
+            TestBuffText ui = FindObjectOfType<TestBuffText>();
+            if (ui != null)
+            {
+                ui.ShowBuff("Score", 3f);   // 버프시간이 없기때문에 임의로 3초로 설정
+            }
         }
         Destroy(gameObject);
     }

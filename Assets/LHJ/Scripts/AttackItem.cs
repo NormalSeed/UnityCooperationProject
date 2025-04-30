@@ -32,10 +32,13 @@ public class AttackItem : Item
                 effect.transform.SetParent(player.transform);
                 Destroy(effect, buffTime);  // 버프 시간동안 이펙트가 실행되고 그 후 이펙트 삭제
             }
+
+            // UI 실행
             TestBuffText ui = FindObjectOfType<TestBuffText>();
             if (ui != null)
             {
-                ui.ShowAttackBuff(buffTime);
+                // 버프 지속 시간 동안 해당하는 UI 텍스트를 화면에 표시
+                ui.ShowBuff("Attack", buffTime);
             }
         }
 
