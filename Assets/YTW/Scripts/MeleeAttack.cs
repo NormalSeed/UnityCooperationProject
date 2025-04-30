@@ -5,7 +5,6 @@ public class MeleeAttack : MonoBehaviour, IAttackable
     [SerializeField] int damage;
     [SerializeField] float attackRange;
     [SerializeField] float attackCoolTime;
-    [SerializeField] MonsterController monster;
 
     private float lastAttackTime;
 
@@ -23,8 +22,9 @@ public class MeleeAttack : MonoBehaviour, IAttackable
         lastAttackTime = Time.time;
 
         OnDamaged targetHP = target.GetComponent<OnDamaged>();
-
-        targetHP?.TakeDamaged(damage);
-
+        if (targetHP.gameObject.CompareTag("Player"))
+        {
+            targetHP?.TakeDamaged(damage);
+        }
     }
 }

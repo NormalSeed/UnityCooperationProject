@@ -19,16 +19,14 @@ public class MonsterController : MonoBehaviour
             monster = GetComponent<NavMeshAgent>();
             if (monster == null)
             {
-                return; 
+                return;
             }
         }
 
+        attackable = GetComponent<IAttackable>();
         if (attackable == null)
         {
-            if (CompareTag("Melee"))
-                attackable = GetComponent<MeleeAttack>();
-            else if (CompareTag("Ranged"))
-                attackable = GetComponent<RangedAttack>();
+            Debug.LogError($"{name}에 IAttackable를 구현한 컴포넌트를 적용 안했습니다.");
             return;
         }
 
@@ -77,13 +75,27 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-            monster.isStopped = false;
-            monster.SetDestination(target.position);
+        monster.isStopped = false;
+        monster.SetDestination(target.position);
 
-            if (attackable.CanAttack(target))
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        // 사정거리 안에 들어왔을 때 수동으로 회전 
+        if (distance <= monster.stoppingDistance)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            direction.y = 0f;
+            if (direction != Vector3.zero)
             {
-                attackable.Attack(target);
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
             }
-        
+        }
+
+        if (attackable.CanAttack(target))
+        {
+            attackable.Attack(target);
+        }
+
     }
 }

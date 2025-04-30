@@ -9,7 +9,6 @@ public class RangedAttack : MonoBehaviour, IAttackable
     [SerializeField] float attackCoolTime;
     [Range(10,30)]
     [SerializeField] float bulletSpeed;
-    [SerializeField] MonsterController monster;
     [SerializeField] Transform bulletPos;
     [SerializeField] BulletPool bulletpool;
 
@@ -29,7 +28,8 @@ public class RangedAttack : MonoBehaviour, IAttackable
     }
     private void Fire()
     {
-        PooledBullet bullet = (PooledBullet)bulletpool.GetObject(transform.position, transform.rotation);
+        PooledBullet bullet = (PooledBullet)bulletpool.GetObject(bulletPos.position, bulletPos.rotation);
+
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.velocity = transform.forward * bulletSpeed;
     }
