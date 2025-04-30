@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PropellerRatator : MonoBehaviour
+public class PropellerRotator : MonoBehaviour
 {
     [SerializeField] float rotationSpd;
     private Rigidbody rigidBody;
