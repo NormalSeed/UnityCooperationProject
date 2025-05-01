@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerAnimator : MonoBehaviour
+{
+    public float speed;
+    float hAxis;
+    float vAxis;
+    bool wDown;
+    bool jDown;
+    bool Jumping;
+    
+
+    Vector3 moveVec;
+
+    Rigidbody rigid;
+    Animator anim;
+
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody>();
+        anim = GetComponentInChildren<Animator>(); //컴포넌트의 자식에 위치한 Animator를 가져온다
+    }
+    void Update()
+    {
+        GetInput();
+        Move();
+        Turn();
+        Jump();
+        
+    }
+    void GetInput()
+    {
+        hAxis = Input.GetAxisRaw("Horizontal");
+        vAxis = Input.GetAxisRaw("vertical");
+        wDown = Input.GetButtonDown("Walk");
+        jDown = Input.GetButtonDown("Jump");
+    }
+
+    void Move()
+    {
+
+        moveVec = new Vector3(hAxis, 0, vAxis).normalized;//상하좌우 이동 + 대각선 방향값1로 고정한다
+        transform.position += moveVec * speed * (wDown ? 0.3f : 1f) * Time.deltaTime;
+
+        anim.SetBool("Running", moveVec != Vector3.zero);//기본적으로 Player 달리기설정
+        anim.SetBool("Walking", wDown);
+    }
+    void Turn()
+    {
+        transform.LookAt(transform.position + moveVec);//현재위치에서 움직여야할 방향으로 움직인다
+    }
+    void Jump()
+    {
+        if (jDown && !Jumping)
+        {
+            rigid.AddForce(Vector3.up * 15, ForceMode.Impulse);
+            anim.SetBool("Jumping", true);
+            anim.SetTrigger("doJump");
+            Jumping = true;
+        }
+    }
+    void OnCollisionEnter(Collision collision)//이벤트 함후로 착지 구현
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            anim.SetBool("Jumping", false);
+            Jumping = false;
+        }
+    }
+
+}
