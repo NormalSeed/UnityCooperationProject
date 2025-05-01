@@ -12,6 +12,7 @@ public class GM : MonoBehaviour
     public float initBallSpeed;
     public Vector3 m_initBallVector;
 
+    //// 게임 점수 관련 변수
     public int score = 0;
     public int highScore = 0;
     public bool isGameOver = false;
@@ -43,6 +44,7 @@ public class GM : MonoBehaviour
 
     void Start()
     {
+        //// Ball이 존재하면 초기 속도 및 방향을 설정
         if (m_ball != null)
         {
             var ballScript = m_ball.GetComponent<BallScript>();
@@ -66,6 +68,7 @@ public class GM : MonoBehaviour
     public void AddScore(int amount)
     {
         score += amount;
+        // // 최고 점수 갱신 여부 확인
         if (score > highScore)
             highScore = score;
 
@@ -95,4 +98,5 @@ public class GM : MonoBehaviour
     {
         throw new NotImplementedException();
     }
+    //수정
 }
