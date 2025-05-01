@@ -47,18 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTitle: BALL GAME
-  health: 0
-  maxHealth: 0
+  lifePoint: 0
+  initialLifePoint: 5
   onGameOvered:
     m_PersistentCalls:
       m_Calls: []
   onLevelCleared:
     m_PersistentCalls:
       m_Calls: []
-  onHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onScoreChanged:
+  onLifePointChanged:
     m_PersistentCalls:
       m_Calls: []
   onSceneLoaded:
@@ -78,7 +75,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 7166210187716250623, guid: d5ad268ab2118394798a9c81ef2e7d0c, type: 3}
   pauseUI: {fileID: 7166210187716250623, guid: b9305ce652c6ad34fb8fd0ee62e362c1, type: 3}
-  levelClearUI: {fileID: 7166210187716250623, guid: 669c2f0722c7b0b4a9c27a171b6949b7, type: 3}
+  stageClearUI: {fileID: 7166210187716250623, guid: 669c2f0722c7b0b4a9c27a171b6949b7, type: 3}
+  stageFailedUI: {fileID: 7166210187716250623, guid: ec357ba5690e2614985d2e184514ea8f, type: 3}
   infoUI: {fileID: 2334004622502291711, guid: 42cfec1ab0c8b9349ab39b38fcb34bff, type: 3}
 --- !u!114 &3387562503118375261
 MonoBehaviour:
@@ -97,10 +95,10 @@ MonoBehaviour:
   stageScore: 0
   stageNames:
   - Title
-  - Level1
-  - Level2
-  - Level3
-  - LastLevel
+  - Stage1
+  - Stage2
+  - Stage3
+  - LastStage
   maxStageScores: 000000000b00000016000000210000002c000000
   onValueChanged:
     m_PersistentCalls:

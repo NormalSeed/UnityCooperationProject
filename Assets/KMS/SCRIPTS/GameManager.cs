@@ -15,36 +15,32 @@ public class GameManager : Singleton<GameManager>
     // 게임 이름은 타이틀 UI에서 게임의 제목을 나타내기 위해 사용됩니다.
     [SerializeField] private string gameTitle = "BALL GAME";
     public string GameTitle { get { return gameTitle; } }
-    // 플레이어의 체력 부분은 현재 사용처가 없습니다.
-    // 추후 다른 팀원이 구현한 체력과 겹칠 경우 지울 예정입니다.
-    [SerializeField] private int health;
-    [SerializeField] private int maxHealth;
-    public int Health
+
+    // 남은 목숨을 나타냅니다.
+    [SerializeField] private int lifePoint;
+    [SerializeField] private int initialLifePoint;
+    public int LifePoint
     {
         get
         {
-            return health;
+            return lifePoint;
         }
         set
         {
-            onHealthChanged.Invoke();
             int next = value;
             if (next < 0)
             {
                 next = 0;
             }
-            else if (next > maxHealth)
-            {
-                next = maxHealth;
-            }
-            health = next;
+            lifePoint = next;
+            onLifePointChanged?.Invoke();
         }
     }
 
     // 아래의 세 이벤트는 현재 사용처가 없습니다.
     [SerializeField] public UnityEvent onGameOvered;
     [SerializeField] public UnityEvent onLevelCleared;
-    [SerializeField] public UnityEvent onHealthChanged;
+    [SerializeField] public UnityEvent onLifePointChanged;
 
     // 새로운 씬이 로드될 때 불러올 이벤트입니다.
     [SerializeField] public UnityEvent<int> onSceneLoaded;
@@ -79,22 +75,18 @@ public class GameManager : Singleton<GameManager>
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            GameOver();
+            StageFailed();
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            LevelClear();
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            GotoTitle();
+            StageClear();
         }
     }
     // 게임 매니저 세팅을 초기화합니다.
     // 이전에 열렸던 씬의 인덱스는 최초 -1로 지정합니다.
     public void Init()
     {
-        health = maxHealth;
+        lifePoint = initialLifePoint;
         lastOpenedSceneIndex = -1;
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
@@ -161,21 +153,30 @@ public class GameManager : Singleton<GameManager>
         onSceneLoaded?.Invoke(currentSceneIndex);
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
-    public void RestartLevel()
-    {
-        LoadScene(currentSceneIndex);
-    }
-    public void RestartGame()
-    {
-        LoadScene(1);
-    }
-    public void GotoTitle()
+
+    public void LoadCurrentScene() => LoadScene(currentSceneIndex);
+    public void LoadFirstScene()
     {
         LoadScene(0);
+        lifePoint = initialLifePoint;
     }
+
 
     // 게임을 정지시키고 게임 오버 UI를 불러오는 함수입니다.
     // 현재 지정된 이벤트는 없습니다.
+    public void StageFailed()
+    {
+        LifePoint--;
+        if (LifePoint == 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            Time.timeScale = 0.0f;
+            UIManager.Instance.OpenStageFailedUI();
+        }
+    }
     public void GameOver()
     {
         Time.timeScale = 0.0f;
@@ -184,11 +185,11 @@ public class GameManager : Singleton<GameManager>
     }
     // 게임을 정지시키고 레벨 클리어 UI를 불러오는 함수입니다.
     // 현재 지정된 이벤트는 없습니다.
-    public void LevelClear()
+    public void StageClear()
     {
         Time.timeScale = 0.0f;
         onLevelCleared?.Invoke();
-        UIManager.Instance.OpenLevelClearUI();
+        UIManager.Instance.OpenStageClearUI();
     }
     // 게임을 정지시키고 게임 오버 UI를 불러오는 함수입니다.
     public void Pause()
