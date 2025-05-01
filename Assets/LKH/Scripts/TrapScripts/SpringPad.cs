@@ -19,7 +19,7 @@ public class SpringPad : MonoBehaviour
     {
         if (pivot == null)
         {
-            Debug.LogError("피벗이 연결되지 않음");
+            return;
         }
 
         originalRotation = pivot.rotation;
@@ -27,7 +27,6 @@ public class SpringPad : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("충돌 감지");
         if (collision.gameObject.CompareTag("Player") && !isTilting)
         {
             StartCoroutine(TiltAndReturn());
@@ -40,7 +39,6 @@ public class SpringPad : MonoBehaviour
             Rigidbody rb = collision.rigidbody;
             if (rb != null)
             {
-                Debug.Log("힘 가하는 중!");
                 Vector3 forceDirection = pivot.up; // 발판의 법선 벡터 방향
                 rb.AddForce(forceDirection * padPower, ForceMode.Impulse);
             }
@@ -50,7 +48,6 @@ public class SpringPad : MonoBehaviour
     private IEnumerator TiltAndReturn()
     {
         yield return new WaitForSeconds(0.5f);
-        Debug.Log("기울이기 시작");
         isTilting = true;
 
         targetRotation = Quaternion.Euler(pivot.rotation.eulerAngles.x, pivot.rotation.eulerAngles.y, tiltAngle);
