@@ -5,10 +5,16 @@ using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
 {
-    [SerializeField] Button btn;
+    [SerializeField] Button backButton;
+    [SerializeField] Button retryButton;
+    [SerializeField] Button titleButton;
     private void Start()
     {
-        btn.onClick.AddListener(UIManager.Instance.ExitUI);
+        backButton.onClick.AddListener(UIManager.Instance.ExitUI);
+        retryButton.onClick.AddListener(UIManager.Instance.ExitUI);
+        retryButton.onClick.AddListener(GameManager.Instance.LoadCurrentScene);
+        titleButton.onClick.AddListener(UIManager.Instance.ExitUI);
+        titleButton.onClick.AddListener(GameManager.Instance.LoadFirstScene);
     }
 
 }

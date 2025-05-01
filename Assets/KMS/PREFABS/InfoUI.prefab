@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageName: {fileID: 6523393367775985708}
-  health: {fileID: 8256061234857940371}
+  life: {fileID: 8256061234857940371}
   score: {fileID: 7546117481658412171}
 --- !u!1 &3535719407439747880
 GameObject:
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 9099075651685880355}
   - component: {fileID: 8256061234857940371}
   m_Layer: 5
-  m_Name: Health
+  m_Name: LifePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

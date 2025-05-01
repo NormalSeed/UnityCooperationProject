@@ -39,6 +39,7 @@ public class StageManager : Singleton<StageManager>
                 next = maxStageScore;
             }
             stageScore = next;
+            onValueChanged?.Invoke();
         }
     }
     private void Awake()
@@ -48,6 +49,18 @@ public class StageManager : Singleton<StageManager>
     private void Start()
     {
         GameManager.Instance.onSceneLoaded.AddListener(InitStageValues);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            StageScore = StageScore + 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            StageScore = StageScore  - 1;
+        }
     }
 
     // onSceneLoaded 이벤트에 할당되어 씬이 바뀔때 씬 인덱스별로 값을 지정합니다.

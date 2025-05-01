@@ -11,7 +11,8 @@ public class UIManager : Singleton<UIManager>
 
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject pauseUI;
-    [SerializeField] private GameObject levelClearUI;
+    [SerializeField] private GameObject stageClearUI;
+    [SerializeField] private GameObject stageFailedUI;
     [SerializeField] private GameObject infoUI;
 
     private List<GameObject> UIList = new List<GameObject>();
@@ -35,7 +36,8 @@ public class UIManager : Singleton<UIManager>
     {
         UIInit(pauseUI);
         UIInit(gameOverUI);
-        UIInit(levelClearUI);
+        UIInit(stageClearUI);
+        UIInit(stageFailedUI);
         info = Instantiate(infoUI);
         DontDestroyOnLoad(info);
         info.SetActive(false);
@@ -63,7 +65,7 @@ public class UIManager : Singleton<UIManager>
     }
     // 레벨 클리어 UI를 활성화합니다.
     // 게임매니저 측의 LevelClear 함수에 포함되어있습니다.
-    public void OpenLevelClearUI()
+    public void OpenStageClearUI()
     {
         if (isUIOpend == true)
         {
@@ -73,8 +75,20 @@ public class UIManager : Singleton<UIManager>
         currentUI = UIList[2];
         currentUI.SetActive(true);
 
-    }// 일시정지 UI를 활성화합니다.
-     // 게임매니저 측의 Pause 함수에 포함되어있습니다.
+    }
+    public void OpenStageFailedUI()
+    {
+        if (isUIOpend == true)
+        {
+            return;
+        }
+        isUIOpend = true;
+        currentUI = UIList[3];
+        currentUI.SetActive(true);
+
+    }
+    // 일시정지 UI를 활성화합니다.
+    // 게임매니저 측의 Pause 함수에 포함되어있습니다.
     public void OpenPauseUI()
     {
         if (isUIOpend == true)
