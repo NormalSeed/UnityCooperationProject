@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//이 코드는 공의 초기 움직임을 설정 게임이 시작될 때 공의 속도와 방향을 설정하고,BallPlay클래스가 전체 게임에서 하나만 존재하도록 관리하는 역할
+//확인
 public class BallPlay : MonoBehaviour
 {
     // GM 클래스의 싱글톤 인스턴스를 저장할 정적 변수

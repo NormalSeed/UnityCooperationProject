@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+//이 코드는 공이 이동하고, 점프하며, 아이템을 먹고, 목표 지점에 도달하면 다음 스테이지로 이동하는 구조에서 사용
+//플레이어가 공을 굴리며 장애물을 피하고 아이템을 전부 수집해서 목표 지점에 도착해야 클리어
 public class PB : MonoBehaviour
 {
     public float jumpPower;

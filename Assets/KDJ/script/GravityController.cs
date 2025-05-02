@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+//이코드는
+//공이나 물체가 중력을 따라 움직이도록 만든 게임에서 중력 방향을 조작 장애물을 피하거나 진행 경로를 바꾸는 코드
 public class GravityController : MonoBehaviour
 {
     //중력 가속도
