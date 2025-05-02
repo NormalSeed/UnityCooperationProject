@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
-public class Testplayercontroll : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
     [SerializeField] private Rigidbody rigid;
     [SerializeField] private float playerSpeed;
