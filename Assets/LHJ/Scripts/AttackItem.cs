@@ -34,7 +34,7 @@ public class AttackItem : Item
             }
 
             // UI 실행
-            TestBuffText ui = FindObjectOfType<TestBuffText>();
+            BuffText ui = FindObjectOfType<BuffText>();
             if (ui != null)
             {
                 // 버프 지속 시간 동안 해당하는 UI 텍스트를 화면에 표시
