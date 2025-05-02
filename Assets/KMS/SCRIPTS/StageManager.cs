@@ -53,6 +53,7 @@ public class StageManager : Singleton<StageManager>
 
     private void Update()
     {
+        // 테스트 코드
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
             StageScore = StageScore + 1;
@@ -71,5 +72,10 @@ public class StageManager : Singleton<StageManager>
         stageName = stageNames[SceneIndex];
         maxStageScore = maxStageScores[SceneIndex];
         onValueChanged?.Invoke();
+    }
+
+    public bool isScoreFull()
+    {
+        return stageScore == MaxStageScore;
     }
 }
