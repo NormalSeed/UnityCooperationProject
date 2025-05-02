@@ -27,7 +27,10 @@ public class PotionItem : Item
                 if (healEffect != null)
                 {
                     GameObject effect = Instantiate(healEffect, player.transform.position, Quaternion.identity);
-                    effect.transform.SetParent(player.transform);
+
+                    // 회전 영향 없이 위치만 따라가게
+                    EffectFollowPlayer follow = effect.AddComponent<EffectFollowPlayer>();
+                    follow.target = player.transform;
                     Destroy(effect, 3f);    // 3초동안 이펙트 생성되고 이후 삭제
                 }
                 BuffText ui = FindObjectOfType<BuffText>();

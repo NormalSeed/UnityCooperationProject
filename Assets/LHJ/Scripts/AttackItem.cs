@@ -29,7 +29,10 @@ public class AttackItem : Item
             if (powerupEffect != null)
             {
                 GameObject effect = Instantiate(powerupEffect, player.transform.position, Quaternion.identity);
-                effect.transform.SetParent(player.transform);
+
+                // 회전 영향 없이 위치만 따라가게
+                EffectFollowPlayer follow = effect.AddComponent<EffectFollowPlayer>();
+                follow.target = player.transform;
                 Destroy(effect, buffTime);  // 버프 시간동안 이펙트가 실행되고 그 후 이펙트 삭제
             }
 
