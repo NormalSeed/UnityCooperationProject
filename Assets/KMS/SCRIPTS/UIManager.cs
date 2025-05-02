@@ -53,51 +53,37 @@ public class UIManager : Singleton<UIManager>
     }
     // 게임오버 UI를 활성화합니다.
     // 게임매니저 측의 GameOver 함수에 포함되어있습니다.
-    public void OpenGameOverUI()
-    {
-        if (isUIOpend == true)
-        {
-            return;
-        }
-        isUIOpend = true;
-        currentUI = UIList[1];
-        currentUI.SetActive(true);
-    }
-    // 레벨 클리어 UI를 활성화합니다.
-    // 게임매니저 측의 LevelClear 함수에 포함되어있습니다.
-    public void OpenStageClearUI()
-    {
-        if (isUIOpend == true)
-        {
-            return;
-        }
-        isUIOpend = true;
-        currentUI = UIList[2];
-        currentUI.SetActive(true);
 
-    }
-    public void OpenStageFailedUI()
+    public void OpenUI(int index)
     {
         if (isUIOpend == true)
         {
             return;
         }
         isUIOpend = true;
-        currentUI = UIList[3];
+        currentUI = UIList[index];
         currentUI.SetActive(true);
-
     }
     // 일시정지 UI를 활성화합니다.
     // 게임매니저 측의 Pause 함수에 포함되어있습니다.
     public void OpenPauseUI()
     {
-        if (isUIOpend == true)
-        {
-            return;
-        }
-        isUIOpend = true;
-        currentUI = UIList[0];
-        currentUI.SetActive(true);
+        OpenUI(0);
+    }
+    public void OpenGameOverUI()
+    {
+        OpenUI(1);
+    }
+    // 레벨 클리어 UI를 활성화합니다.
+    // 게임매니저 측의 LevelClear 함수에 포함되어있습니다.
+    public void OpenStageClearUI()
+    {
+        OpenUI(2);
+
+    }
+    public void OpenStageFailedUI()
+    {
+        OpenUI(3);
     }
     // UI를 비활성화시켜 UI에서 빠져나오는 함수입니다.
     // 게임이 정지되었을 경우 다시 재개시킵니다.
