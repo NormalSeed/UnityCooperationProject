@@ -110,7 +110,7 @@ public class GameManager : Singleton<GameManager>
     }
     // 가장 마지막에 열렸던 씬으로 이동합니다.
     // 현재 3번 씬이고, 이전에 1번 씬이었다면, 1번 씬으로 이동하고
-    // 가장 마지막여 열렸던 씬을 3번 씬으로 합니다.
+    // 가장 마지막에 열렸던 씬을 3번 씬으로 합니다.
     public void LoadLastOpenedScene()
     {
         if (lastOpenedSceneIndex == -1)

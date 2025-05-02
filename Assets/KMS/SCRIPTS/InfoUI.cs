@@ -11,12 +11,12 @@ public class InfoUI : MonoBehaviour
 
     private void Start()
     {
-        StageManager.Instance.onValueChanged.AddListener(UpdateInfo);
+        StageManager.Instance.onStageValueChanged.AddListener(UpdateAll);
         GameManager.Instance.onLifePointChanged.AddListener(UpdateLifePoint);
-        UpdateInfo();
+        UpdateAll();
         UpdateLifePoint();
     }
-    public void UpdateInfo()
+    public void UpdateAll()
     {
         stageName.text = $"Stage : {StageManager.Instance.StageName}";
         life.text = $"Life : {GameManager.Instance.LifePoint}";

@@ -19,9 +19,12 @@ public class StageManager : Singleton<StageManager>
     public string StageName {  get { return stageName; } }
     public int MaxStageScore { get { return maxStageScore; } }
 
+    // 점수 충족 여부를 확인합니다.
     public bool IsScoreFull => stageScore == MaxStageScore;
 
-    [SerializeField] public UnityEvent onValueChanged;
+    // 스테이지의 값(점수 등)이 바뀔때 호출됩니다.
+    // infoUI 측에서 함수가 할당됩니다.
+    [SerializeField] public UnityEvent onStageValueChanged;
 
     public int StageScore
     {
@@ -41,7 +44,7 @@ public class StageManager : Singleton<StageManager>
                 next = maxStageScore;
             }
             stageScore = next;
-            onValueChanged?.Invoke();
+            onStageValueChanged?.Invoke();
         }
     }
     private void Awake()
@@ -50,7 +53,7 @@ public class StageManager : Singleton<StageManager>
     }
     private void Start()
     {
-        GameManager.Instance.onSceneLoaded.AddListener(InitStageValues);
+        GameManager.Instance.onSceneLoaded.AddListener(SetStageValues);
     }
 
     private void Update()
@@ -67,12 +70,14 @@ public class StageManager : Singleton<StageManager>
     }
 
     // onSceneLoaded 이벤트에 할당되어 씬이 바뀔때 씬 인덱스별로 값을 지정합니다.
-    // 인덱스가 0이면 타이틀, 1이면 레벨1, 2면 레벨2 이런식입니다.
-    public void InitStageValues(int SceneIndex)
+    // 즉 씬이 로드되면 스테이지에 필요한 값을 초기화 하고,
+    // onStageValueChanged를 호출하여 그 값을 InfoUI에 반영합니다.
+    // 인덱스가 0이면 타이틀, 1이면 레벨1, 2면 레벨2 이런식입니다. (씬 인덱스와 대응합니다)
+    public void SetStageValues(int SceneIndex)
     {
         stageScore = 0;
         stageName = stageNames[SceneIndex];
         maxStageScore = maxStageScores[SceneIndex];
-        onValueChanged?.Invoke();
+        onStageValueChanged?.Invoke();
     }
 }

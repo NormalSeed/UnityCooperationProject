@@ -30,7 +30,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     // 세팅을 초기화합니다.
-    public void Init()
+    private void Init()
     {
         UIInit(pauseUI);
         UIInit(gameOverUI);
@@ -73,7 +73,6 @@ public class UIManager : Singleton<UIManager>
     public void OpenStageClearUI()
     {
         OpenUI(2);
-
     }
     public void OpenStageFailedUI()
     {
@@ -90,7 +89,7 @@ public class UIManager : Singleton<UIManager>
 
     // 게임 정보 UI의 활성화 여부를 결정합니다.
     // 해당 함수는 onSceneLoaded 이벤트에 할당되어 있어 씬이 바뀔때마다 호출됩니다.
-    // 결과적으로 타이틀 씬이 아닐 경우에만 UI를 활성화합니다.
+    // 결과적으로 타이틀 씬이 아닐 경우에만 UI를 활성화하는 기능을 합니다.
     public void ToggleInfoUI(int SceneIndex)
     {
         if (info.activeSelf && SceneIndex == 0)
