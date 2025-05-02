@@ -15,10 +15,11 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject stageFailedUI;
     [SerializeField] private GameObject infoUI;
 
-    private List<GameObject> UIList = new List<GameObject>();
+    // 스크린 UI의 참조를 담는 딕셔너리입니다.
+    private Dictionary<string, GameObject> screenUIDict = new Dictionary<string, GameObject>();
     private GameObject currentUI;
     private GameObject info;
-    private bool isUIOpend = false;
+    private bool isScreenUIOpend = false;
     private void Awake()
     {
         SetInstance();
@@ -32,10 +33,10 @@ public class UIManager : Singleton<UIManager>
     // 세팅을 초기화합니다.
     private void Init()
     {
-        UIInit(pauseUI);
-        UIInit(gameOverUI);
-        UIInit(stageClearUI);
-        UIInit(stageFailedUI);
+        InitScreenUI("pause", pauseUI);
+        InitScreenUI("gameover", gameOverUI);
+        InitScreenUI("clear", stageClearUI);
+        InitScreenUI("failed", stageFailedUI);
 
         info = Instantiate(infoUI);
         DontDestroyOnLoad(info);
@@ -43,47 +44,49 @@ public class UIManager : Singleton<UIManager>
     }
     // 초기화 시에 호출되는 함수로
     // 필요한 UI를 불러와 사라지지 않도록 만들고, UI 리스트에 추가합니다.
-    private void UIInit(GameObject UI)
+    private void InitScreenUI(string name, GameObject UI)
     {
         currentUI = Instantiate(UI);
         DontDestroyOnLoad(currentUI);
         currentUI.SetActive(false);
-        UIList.Add(currentUI);
+        screenUIDict.Add(name, currentUI);
     }
 
-    // 리스트에 저장된 UI를 활성화합니다.
-    public void OpenUI(int index)
+    // 지정된 스크린UI를 딕셔너리에서 불러와 활성화합니다.
+    // UI가 뜨는 동안에는 게임이 정지합니다.
+    public void OpenScreenUI(string name)
     {
-        if (isUIOpend == true)
+        if (isScreenUIOpend)
         {
             return;
         }
-        isUIOpend = true;
-        currentUI = UIList[index];
+        Time.timeScale = 0.0f;
+        isScreenUIOpend = true;
+        currentUI = screenUIDict[name];
         currentUI.SetActive(true);
     }
     public void OpenPauseUI()
     {
-        OpenUI(0);
+        OpenScreenUI("pause");
     }
     public void OpenGameOverUI()
     {
-        OpenUI(1);
+        OpenScreenUI("gameover");
     }
     public void OpenStageClearUI()
     {
-        OpenUI(2);
+        OpenScreenUI("clear");
     }
     public void OpenStageFailedUI()
     {
-        OpenUI(3);
+        OpenScreenUI("failed");
     }
     // UI를 비활성화시켜 UI에서 빠져나오는 함수입니다.
     // 게임이 정지되었을 경우 다시 재개시킵니다.
     public void ExitUI()
     {
         Time.timeScale = 1.0f;
-        isUIOpend = false;
+        isScreenUIOpend = false;
         currentUI.SetActive(false);
     }
 

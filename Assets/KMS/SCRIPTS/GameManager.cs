@@ -64,9 +64,9 @@ public class GameManager : Singleton<GameManager>
     {
         Init();
     }
-    // 아래의 키는 기능 테스트용입니다.
     private void Update()
     {
+        // 테스트 코드
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
@@ -176,20 +176,16 @@ public class GameManager : Singleton<GameManager>
     }
     public void GameOver()
     {
-        Time.timeScale = 0.0f;
         UIManager.Instance.OpenGameOverUI();
     }
-    // 게임을 정지시키고 레벨 클리어 UI를 불러오는 함수입니다.
-    // 현재 지정된 이벤트는 없습니다.
+    // 레벨 클리어 UI를 불러오는 함수입니다.
     public void StageClear()
     {
-        Time.timeScale = 0.0f;
         UIManager.Instance.OpenStageClearUI();
     }
-    // 게임을 정지시키고 게임 오버 UI를 불러오는 함수입니다.
+    // 게임 오버 UI를 불러오는 함수입니다.
     public void Pause()
     {
-        Time.timeScale = 0.0f;
         UIManager.Instance.OpenPauseUI();
     }
 }
