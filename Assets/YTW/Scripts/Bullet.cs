@@ -16,13 +16,12 @@ public class Bullet : MonoBehaviour
         if (targetHP != null && targetHP.gameObject.CompareTag("Player"))
         {
             targetHP.TakeDamaged(damage);
-            pooledBullet.ReturnPool();
+            
         }
         if (hitObject.layer == LayerMask.NameToLayer("Wall") || hitObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             // 터지는 이팩트 
-            pooledBullet.ReturnPool();
         }
-        
+        pooledBullet.ReturnPool();
     }
 }

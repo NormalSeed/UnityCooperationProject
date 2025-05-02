@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30770c7fb87e35f4a989ed3e0cd3f869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 10
   monster: {fileID: 851230375622295861}
   target: {fileID: 0}
 --- !u!114 &8835741397035573319
