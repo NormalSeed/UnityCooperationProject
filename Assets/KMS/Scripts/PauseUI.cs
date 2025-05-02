@@ -16,5 +16,12 @@ public class PauseUI : MonoBehaviour
         titleButton.onClick.AddListener(UIManager.Instance.ExitUI);
         titleButton.onClick.AddListener(GameManager.Instance.LoadFirstScene);
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.Instance.ExitUI();
+        }
+    }
 
 }

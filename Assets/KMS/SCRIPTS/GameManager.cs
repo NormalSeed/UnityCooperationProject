@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
@@ -37,13 +36,13 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    // 아래의 세 이벤트는 현재 사용처가 없습니다.
-    [SerializeField] public UnityEvent onGameOvered;
-    [SerializeField] public UnityEvent onLevelCleared;
+    // 생명 포인트 값이 수정될 때 불러올 이벤트입니다.
     [SerializeField] public UnityEvent onLifePointChanged;
 
     // 새로운 씬이 로드될 때 불러올 이벤트입니다.
     [SerializeField] public UnityEvent<int> onSceneLoaded;
+
+    [SerializeField] public UnityEvent onGameovered;
 
     // 바로 이전에 열렸던 씬의 인덱스를 저장합니다. 최초 -1
     private int lastOpenedSceneIndex;
@@ -66,20 +65,12 @@ public class GameManager : Singleton<GameManager>
     {
         Init();
     }
-    // 아래의 키는 기능 테스트용입니다.
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // 일시정지 활성화
+        if (Input.GetKeyDown(KeyCode.Escape) && currentSceneIndex != 0)
         {
             Pause();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            StageFailed();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            StageClear();
         }
     }
     // 게임 매니저 세팅을 초기화합니다.
@@ -112,7 +103,7 @@ public class GameManager : Singleton<GameManager>
     }
     // 가장 마지막에 열렸던 씬으로 이동합니다.
     // 현재 3번 씬이고, 이전에 1번 씬이었다면, 1번 씬으로 이동하고
-    // 가장 마지막여 열렸던 씬을 3번 씬으로 합니다.
+    // 가장 마지막에 열렸던 씬을 3번 씬으로 합니다.
     public void LoadLastOpenedScene()
     {
         if (lastOpenedSceneIndex == -1)
@@ -130,7 +121,6 @@ public class GameManager : Singleton<GameManager>
     // 예를 들어, 1번 씬에서 2번 씬으로 이동합니다.
     public void LoadNextScene()
     {
-        Debug.Log(currentSceneIndex);
         if (currentSceneIndex == SceneLength - 1)
         {
             return;
@@ -154,47 +144,26 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
 
+    // 현재 씬을 다시 로드합니다 (재시작 기능)
     public void LoadCurrentScene() => LoadScene(currentSceneIndex);
+
+    // 처음 씬을 로드합니다 (타이틀 씬으로 돌아가는 기능)
     public void LoadFirstScene()
     {
         LoadScene(0);
         lifePoint = initialLifePoint;
     }
 
-
-    // 게임을 정지시키고 게임 오버 UI를 불러오는 함수입니다.
-    // 현재 지정된 이벤트는 없습니다.
-    public void StageFailed()
-    {
-        LifePoint--;
-        if (LifePoint == 0)
-        {
-            GameOver();
-        }
-        else
-        {
-            Time.timeScale = 0.0f;
-            UIManager.Instance.OpenStageFailedUI();
-        }
-    }
+    // 게임을 오버시킵니다.
     public void GameOver()
     {
-        Time.timeScale = 0.0f;
-        onGameOvered?.Invoke();
+        onGameovered?.Invoke();
         UIManager.Instance.OpenGameOverUI();
     }
-    // 게임을 정지시키고 레벨 클리어 UI를 불러오는 함수입니다.
-    // 현재 지정된 이벤트는 없습니다.
-    public void StageClear()
-    {
-        Time.timeScale = 0.0f;
-        onLevelCleared?.Invoke();
-        UIManager.Instance.OpenStageClearUI();
-    }
-    // 게임을 정지시키고 게임 오버 UI를 불러오는 함수입니다.
+
+    // 게임을 일시정지합니다.
     public void Pause()
     {
-        Time.timeScale = 0.0f;
         UIManager.Instance.OpenPauseUI();
     }
 }

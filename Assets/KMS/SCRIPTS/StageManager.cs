@@ -16,10 +16,22 @@ public class StageManager : Singleton<StageManager>
     // 인덱스가 0이면 타이틀, 1이면 레벨1, 2면 레벨2에 필요한 값이 됩니다.
     [SerializeField] List<string> stageNames;
     [SerializeField] List<int> maxStageScores;
+    public int seconds = 0;
+    private float oneSec = 0;
     public string StageName {  get { return stageName; } }
     public int MaxStageScore { get { return maxStageScore; } }
 
-    [SerializeField] public UnityEvent onValueChanged;
+    // 점수 충족 여부를 확인합니다.
+    public bool IsScoreFull => stageScore == MaxStageScore;
+
+    // 스테이지의 값(점수 등)이 바뀔때 호출됩니다.
+    // infoUI 측에서 함수가 할당됩니다.
+    [SerializeField] public UnityEvent onStageValueChanged;
+    [SerializeField] public UnityEvent onSeconds;
+
+    // 추후 추가될 가능성이 있는 이벤트들
+    [SerializeField] public UnityEvent onStageCleared;
+    [SerializeField] public UnityEvent onStageFailed;
 
     public int StageScore
     {
@@ -39,7 +51,7 @@ public class StageManager : Singleton<StageManager>
                 next = maxStageScore;
             }
             stageScore = next;
-            onValueChanged?.Invoke();
+            onStageValueChanged?.Invoke();
         }
     }
     private void Awake()
@@ -48,28 +60,67 @@ public class StageManager : Singleton<StageManager>
     }
     private void Start()
     {
-        GameManager.Instance.onSceneLoaded.AddListener(InitStageValues);
+        GameManager.Instance.onSceneLoaded.AddListener(SetStageValues);
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        // 시간 측정 코드
+        if (!UIManager.Instance.IsScreenUIOpened)
         {
-            StageScore = StageScore + 1;
+            oneSec += Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (oneSec >= 1)
         {
-            StageScore = StageScore  - 1;
+            oneSec = 0;
+            seconds++;
+            onSeconds?.Invoke();
+        }
+
+        // 테스트 코드 (스테이지 클리어, 실패)
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            StageFailed();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            StageClear();
         }
     }
 
     // onSceneLoaded 이벤트에 할당되어 씬이 바뀔때 씬 인덱스별로 값을 지정합니다.
-    // 인덱스가 0이면 타이틀, 1이면 레벨1, 2면 레벨2 이런식입니다.
-    public void InitStageValues(int SceneIndex)
+    // 즉 씬이 로드되면 스테이지에 필요한 값을 초기화 하고,
+    // onStageValueChanged를 호출하여 그 값을 InfoUI에 반영합니다.
+    // 인덱스가 0이면 타이틀, 1이면 레벨1, 2면 레벨2 이런식입니다. (씬 인덱스와 대응합니다)
+    public void SetStageValues(int SceneIndex)
     {
+        oneSec = 0;
+        seconds = 0;
         stageScore = 0;
         stageName = stageNames[SceneIndex];
         maxStageScore = maxStageScores[SceneIndex];
-        onValueChanged?.Invoke();
+        onStageValueChanged?.Invoke();
+    }
+
+    // 스테이지 실패 함수입니다.
+    // 자동으로 목숨을 1 차감하며, 0일 경우 게임 오버 함수를 불러옵니다.
+    public void StageFailed()
+    {
+        GameManager.Instance.LifePoint--;
+        if (GameManager.Instance.LifePoint == 0)
+        {
+            GameManager.Instance.GameOver();
+        }
+        else
+        {
+            onStageFailed?.Invoke();
+            UIManager.Instance.OpenStageFailedUI();
+        }
+    }
+    // 스테이지를 클리어시킵니다.
+    public void StageClear()
+    {
+        onStageCleared?.Invoke();
+        UIManager.Instance.OpenStageClearUI();
     }
 }
