@@ -69,6 +69,14 @@ public class StageManager : Singleton<StageManager>
             seconds++;
             onSeconds?.Invoke();
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            StageFailed();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            StageClear();
+        }
     }
 
     // onSceneLoaded 이벤트에 할당되어 씬이 바뀔때 씬 인덱스별로 값을 지정합니다.
@@ -83,5 +91,22 @@ public class StageManager : Singleton<StageManager>
         stageName = stageNames[SceneIndex];
         maxStageScore = maxStageScores[SceneIndex];
         onStageValueChanged?.Invoke();
+    }
+    public void StageFailed()
+    {
+        GameManager.Instance.LifePoint--;
+        if (GameManager.Instance.LifePoint == 0)
+        {
+            GameManager.Instance.GameOver();
+        }
+        else
+        {
+            UIManager.Instance.OpenStageFailedUI();
+        }
+    }
+    // 레벨 클리어 UI를 불러오는 함수입니다.
+    public void StageClear()
+    {
+        UIManager.Instance.OpenStageClearUI();
     }
 }

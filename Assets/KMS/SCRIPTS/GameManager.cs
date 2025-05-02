@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
@@ -70,14 +69,6 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            StageFailed();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            StageClear();
         }
     }
     // 게임 매니저 세팅을 초기화합니다.
@@ -157,33 +148,10 @@ public class GameManager : Singleton<GameManager>
         LoadScene(0);
         lifePoint = initialLifePoint;
     }
-
-
-    // 게임을 정지시키고 게임 오버 UI를 불러오는 함수입니다.
-    // 현재 지정된 이벤트는 없습니다.
-    public void StageFailed()
-    {
-        LifePoint--;
-        if (LifePoint == 0)
-        {
-            GameOver();
-        }
-        else
-        {
-            Time.timeScale = 0.0f;
-            UIManager.Instance.OpenStageFailedUI();
-        }
-    }
     public void GameOver()
     {
         UIManager.Instance.OpenGameOverUI();
     }
-    // 레벨 클리어 UI를 불러오는 함수입니다.
-    public void StageClear()
-    {
-        UIManager.Instance.OpenStageClearUI();
-    }
-    // 게임 오버 UI를 불러오는 함수입니다.
     public void Pause()
     {
         UIManager.Instance.OpenPauseUI();
