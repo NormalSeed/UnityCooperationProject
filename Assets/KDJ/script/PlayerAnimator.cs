@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//이 코드는 플레이어 캐릭터의 애니메이션과 움직임을 함께 제어하는 스크립트입니다.
+//키 입력에 따라 공이 아닌 몬스터나 사람일경우 걷고, 달리고, 점프하고, 방향 전환기능
 public class PlayerAnimator : MonoBehaviour
 {
     public float speed;

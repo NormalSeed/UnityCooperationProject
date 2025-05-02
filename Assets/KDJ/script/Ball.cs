@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//이 코드는 Unity에서 공이 벽이나 플레이어에 닿으면 튕기듯이 방향을 바꾸며 계속 움직이는 기능을 구현할 때 사용하는 스크립트
+//자동으로 움직이고 벽에 부딪히면 방향을 반사하는 공을 만들고 싶을 때 사용
 public class Ball : MonoBehaviour
 {
     //Ball이 어떤 벡터 방향으로 움직이다가 벽 또는 플레이어에 닿았을때 방향전환 
