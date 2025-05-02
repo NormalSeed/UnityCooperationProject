@@ -17,7 +17,7 @@ public class ScoreItem : Item
     public override void RunItem()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Testplayercontroll playerController = player.GetComponent<Testplayercontroll>();
+        PlayerStats playerController = player.GetComponent<PlayerStats>();
         if (playerController != null)
         {
             // 플레이어 점수 증가
