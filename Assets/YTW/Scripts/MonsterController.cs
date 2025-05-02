@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
+    [SerializeField] private float rotationSpeed;
     [SerializeField] private NavMeshAgent monster;
     [SerializeField] private Transform target;
     private IAttackable attackable;
@@ -47,10 +48,8 @@ public class MonsterController : MonoBehaviour
         else
         {
             target = null;
-            if (monster != null)
-            {
-                monster.isStopped = true;
-            }
+            monster.isStopped = true;
+
         }
     }
 
@@ -60,42 +59,42 @@ public class MonsterController : MonoBehaviour
         {
             return;
         }
+        if (target == null)
+        {
+            InitTarget();
+            return;
+        }
+            
         DetectPlayer();
     }
 
     private void DetectPlayer()
     {
-        if (target == null)
-        {
-            if (monster != null)
-            {
-                monster.isStopped = true;
-            }
-            InitTarget();
-            return;
-        }
 
         monster.isStopped = false;
         monster.SetDestination(target.position);
 
-        float distance = Vector3.Distance(transform.position, target.position);
+        //float distance = Vector3.Distance(transform.position, target.position);
 
         // 사정거리 안에 들어왔을 때 수동으로 회전 
-        if (distance <= monster.stoppingDistance)
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            direction.y = 0f;
-            if (direction != Vector3.zero)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
-            }
-        }
-
         if (attackable.CanAttack(target))
         {
-            attackable.Attack(target);
+            attackable.Attack(target); 
         }
+        else
+        {
+            RatateToTarget();
+        }
+    }
 
+    void RatateToTarget()
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        direction.y = 0f;
+        if (direction != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 }

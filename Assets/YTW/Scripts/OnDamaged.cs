@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Timeline.Actions;
-using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class OnDamaged : MonoBehaviour
 {
@@ -13,15 +10,12 @@ public class OnDamaged : MonoBehaviour
     [SerializeField] PooledMonster pooledMonster;
 
     private HealthBar healthBar;
-    
+
 
     private void OnEnable()
     {
         CurHP = MaxHP;
-        if (healthBar == null)
-        {
-            healthBar = GetComponentInChildren<HealthBar>();
-        }
+        healthBar = GetComponentInChildren<HealthBar>();
         if (pooledMonster == null)
         {
             pooledMonster = GetComponent<PooledMonster>();
@@ -31,13 +25,14 @@ public class OnDamaged : MonoBehaviour
             }
         }
         healthBar?.SetHP(amount);
+
     }
 
     public void TakeDamaged(int damage)
     {
         CurHP -= damage;
         healthBar?.SetHP((float)CurHP / MaxHP);
-        
+
         Debug.Log($"{damage}데미지 받아서 현재 채력 {CurHP}");
         if (CurHP <= 0)
         {
@@ -55,7 +50,6 @@ public class OnDamaged : MonoBehaviour
             {
                 Debug.LogError($"pooledMonster가 null입니다.");
             }
-            
         }
     }
 }
