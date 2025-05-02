@@ -16,6 +16,8 @@ public class StageManager : Singleton<StageManager>
     // 인덱스가 0이면 타이틀, 1이면 레벨1, 2면 레벨2에 필요한 값이 됩니다.
     [SerializeField] List<string> stageNames;
     [SerializeField] List<int> maxStageScores;
+    public int seconds = 0;
+    private float oneSec = 0;
     public string StageName {  get { return stageName; } }
     public int MaxStageScore { get { return maxStageScore; } }
 
@@ -25,6 +27,7 @@ public class StageManager : Singleton<StageManager>
     // 스테이지의 값(점수 등)이 바뀔때 호출됩니다.
     // infoUI 측에서 함수가 할당됩니다.
     [SerializeField] public UnityEvent onStageValueChanged;
+    [SerializeField] public UnityEvent onSeconds;
 
     public int StageScore
     {
@@ -59,13 +62,12 @@ public class StageManager : Singleton<StageManager>
     private void Update()
     {
         // 테스트 코드
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        oneSec += Time.deltaTime;
+        if (oneSec >= 1)
         {
-            StageScore = StageScore + 1;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            StageScore = StageScore  - 1;
+            oneSec = 0;
+            seconds++;
+            onSeconds?.Invoke();
         }
     }
 
@@ -75,6 +77,8 @@ public class StageManager : Singleton<StageManager>
     // 인덱스가 0이면 타이틀, 1이면 레벨1, 2면 레벨2 이런식입니다. (씬 인덱스와 대응합니다)
     public void SetStageValues(int SceneIndex)
     {
+        oneSec = 0;
+        seconds = 0;
         stageScore = 0;
         stageName = stageNames[SceneIndex];
         maxStageScore = maxStageScores[SceneIndex];
