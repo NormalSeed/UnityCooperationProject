@@ -27,10 +27,13 @@ public class PotionItem : Item
                 if (healEffect != null)
                 {
                     GameObject effect = Instantiate(healEffect, player.transform.position, Quaternion.identity);
-                    effect.transform.SetParent(player.transform);
+
+                    // 회전 영향 없이 위치만 따라가게
+                    EffectFollowPlayer follow = effect.AddComponent<EffectFollowPlayer>();
+                    follow.target = player.transform;
                     Destroy(effect, 3f);    // 3초동안 이펙트 생성되고 이후 삭제
                 }
-                TestBuffText ui = FindObjectOfType<TestBuffText>();
+                BuffText ui = FindObjectOfType<BuffText>();
                 if (ui != null)
                 {
                     ui.ShowBuff("Heal", 3f);   // 버프시간이 없기때문에 임의로 3초로 설정
@@ -40,7 +43,7 @@ public class PotionItem : Item
             else
             {
                 // 체력이 가득 차 있으면 Item기능을 실행하지않고 UI실행
-                TestBuffText ui = FindObjectOfType<TestBuffText>();
+                BuffText ui = FindObjectOfType<BuffText>();
                 if (ui != null)
                 {
                     ui.ShowHealFail();  // TestBuffText.cs에서 임의로 2초로 설정

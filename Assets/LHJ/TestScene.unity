@@ -1647,7 +1647,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!135 &2118290003
 SphereCollider:
@@ -1752,7 +1752,7 @@ MonoBehaviour:
   attack: 10
   score: 30
   maxHp: 5
-  currentHp: 5
+  currentHp: 4
 --- !u!1001 &5249362883190243759
 PrefabInstance:
   m_ObjectHideFlags: 0

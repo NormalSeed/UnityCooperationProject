@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBuffText : MonoBehaviour
+public class BuffText : MonoBehaviour
 {
     public GameObject attackBuffText;
     public GameObject speedBuffText;

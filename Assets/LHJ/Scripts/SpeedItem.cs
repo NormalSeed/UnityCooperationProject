@@ -27,12 +27,15 @@ public class SpeedItem : Item
             if (speedupEffect != null)
             {
                 GameObject effect = Instantiate(speedupEffect, player.transform.position, Quaternion.identity);
-                effect.transform.SetParent(player.transform);
+
+                // 회전 영향 없이 위치만 따라가게
+                EffectFollowPlayer follow = effect.AddComponent<EffectFollowPlayer>();
+                follow.target = player.transform;
                 Destroy(effect, buffTime);  // 버프 시간 동안 이펙트가 실행되고 그 후 이펙트 삭제
             }
 
             // UI실행
-            TestBuffText ui = FindObjectOfType<TestBuffText>();
+            BuffText ui = FindObjectOfType<BuffText>();
             if (ui != null)
             {
                 // 버프 지속 시간 동안 해당하는 UI 텍스트를 화면에 표시
