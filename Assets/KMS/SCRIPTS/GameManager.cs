@@ -37,9 +37,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    // 아래의 세 이벤트는 현재 사용처가 없습니다.
-    [SerializeField] public UnityEvent onGameOvered;
-    [SerializeField] public UnityEvent onLevelCleared;
+    // 생명 포인트 값이 수정될 때 불러올 이벤트입니다.
     [SerializeField] public UnityEvent onLifePointChanged;
 
     // 새로운 씬이 로드될 때 불러올 이벤트입니다.
@@ -180,7 +178,6 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         Time.timeScale = 0.0f;
-        onGameOvered?.Invoke();
         UIManager.Instance.OpenGameOverUI();
     }
     // 게임을 정지시키고 레벨 클리어 UI를 불러오는 함수입니다.
@@ -188,7 +185,6 @@ public class GameManager : Singleton<GameManager>
     public void StageClear()
     {
         Time.timeScale = 0.0f;
-        onLevelCleared?.Invoke();
         UIManager.Instance.OpenStageClearUI();
     }
     // 게임을 정지시키고 게임 오버 UI를 불러오는 함수입니다.

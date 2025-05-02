@@ -28,9 +28,7 @@ public class UIManager : Singleton<UIManager>
         Init();
         GameManager.Instance.onSceneLoaded.AddListener(ToggleInfoUI);
     }
-    private void Update()
-    {
-    }
+
     // 세팅을 초기화합니다.
     public void Init()
     {
@@ -38,6 +36,7 @@ public class UIManager : Singleton<UIManager>
         UIInit(gameOverUI);
         UIInit(stageClearUI);
         UIInit(stageFailedUI);
+
         info = Instantiate(infoUI);
         DontDestroyOnLoad(info);
         info.SetActive(false);
@@ -51,9 +50,8 @@ public class UIManager : Singleton<UIManager>
         currentUI.SetActive(false);
         UIList.Add(currentUI);
     }
-    // 게임오버 UI를 활성화합니다.
-    // 게임매니저 측의 GameOver 함수에 포함되어있습니다.
 
+    // 리스트에 저장된 UI를 활성화합니다.
     public void OpenUI(int index)
     {
         if (isUIOpend == true)
@@ -64,8 +62,6 @@ public class UIManager : Singleton<UIManager>
         currentUI = UIList[index];
         currentUI.SetActive(true);
     }
-    // 일시정지 UI를 활성화합니다.
-    // 게임매니저 측의 Pause 함수에 포함되어있습니다.
     public void OpenPauseUI()
     {
         OpenUI(0);
@@ -74,8 +70,6 @@ public class UIManager : Singleton<UIManager>
     {
         OpenUI(1);
     }
-    // 레벨 클리어 UI를 활성화합니다.
-    // 게임매니저 측의 LevelClear 함수에 포함되어있습니다.
     public void OpenStageClearUI()
     {
         OpenUI(2);

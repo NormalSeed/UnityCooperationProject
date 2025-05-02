@@ -19,6 +19,8 @@ public class StageManager : Singleton<StageManager>
     public string StageName {  get { return stageName; } }
     public int MaxStageScore { get { return maxStageScore; } }
 
+    public bool IsScoreFull => stageScore == MaxStageScore;
+
     [SerializeField] public UnityEvent onValueChanged;
 
     public int StageScore
@@ -72,10 +74,5 @@ public class StageManager : Singleton<StageManager>
         stageName = stageNames[SceneIndex];
         maxStageScore = maxStageScores[SceneIndex];
         onValueChanged?.Invoke();
-    }
-
-    public bool isScoreFull()
-    {
-        return stageScore == MaxStageScore;
     }
 }
