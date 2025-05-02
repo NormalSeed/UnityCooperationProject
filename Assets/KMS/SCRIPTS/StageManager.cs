@@ -76,16 +76,6 @@ public class StageManager : Singleton<StageManager>
             seconds++;
             onSeconds?.Invoke();
         }
-
-        // 테스트 코드 (스테이지 클리어, 실패)
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            StageFailed();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            StageClear();
-        }
     }
 
     // onSceneLoaded 이벤트에 할당되어 씬이 바뀔때 씬 인덱스별로 값을 지정합니다.
