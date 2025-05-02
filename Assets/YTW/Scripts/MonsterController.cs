@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
+    [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private NavMeshAgent monster;
     [SerializeField] private Transform target;
     private IAttackable attackable;
@@ -78,21 +79,20 @@ public class MonsterController : MonoBehaviour
         monster.isStopped = false;
         monster.SetDestination(target.position);
 
-        float distance = Vector3.Distance(transform.position, target.position);
+        //float distance = Vector3.Distance(transform.position, target.position);
 
         // 사정거리 안에 들어왔을 때 수동으로 회전 
-        if (distance <= monster.stoppingDistance)
+        if (!attackable.CanAttack(target))
         {
             Vector3 direction = (target.position - transform.position).normalized;
             direction.y = 0f;
             if (direction != Vector3.zero)
             {
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
             }
         }
-
-        if (attackable.CanAttack(target))
+        else
         {
             attackable.Attack(target);
         }

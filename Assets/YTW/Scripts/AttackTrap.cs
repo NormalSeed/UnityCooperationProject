@@ -76,10 +76,12 @@ public class AttackTrap : MonoBehaviour
     {
         for (int i = monstersInTrap.Count - 1; i >= 0; i--)
         {
+            // 리스트내 죽은 몬스터 제거 및 속도 복구
             MonsterController monster = monstersInTrap[i];
             if (monster == null || !monster.gameObject.activeInHierarchy)
             {
                 NavMeshAgent agent = monster?.GetComponent<NavMeshAgent>();
+
                 if (agent != null && originalSpeeds.ContainsKey(monster))
                 {
                     agent.speed = originalSpeeds[monster]; 
@@ -88,15 +90,16 @@ public class AttackTrap : MonoBehaviour
                 monstersInTrap.RemoveAt(i);
                 lastAttackTimes.Remove(monster);
                 originalSpeeds.Remove(monster);
-                Debug.Log("리스트내 죽은 몬스터 제거 및 속도 복구");
+                
                 continue;
             }
-
+             
+            // 각 공격주기에 moster키가 없다면 0으로
             if (!lastAttackTimes.ContainsKey(monster))
             {
                 lastAttackTimes[monster] = 0;
             }
-
+            
             if (Time.time - lastAttackTimes[monster] >= attackCoolTime)
             {
                 Attack(monster);
