@@ -128,7 +128,6 @@ public class GameManager : Singleton<GameManager>
     // 예를 들어, 1번 씬에서 2번 씬으로 이동합니다.
     public void LoadNextScene()
     {
-        Debug.Log(currentSceneIndex);
         if (currentSceneIndex == SceneLength - 1)
         {
             return;
