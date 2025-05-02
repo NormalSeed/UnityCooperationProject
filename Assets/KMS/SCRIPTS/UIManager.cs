@@ -19,7 +19,8 @@ public class UIManager : Singleton<UIManager>
     private Dictionary<string, GameObject> screenUIDict = new Dictionary<string, GameObject>();
     private GameObject currentUI;
     private GameObject info;
-    private bool isScreenUIOpend = false;
+    private bool isScreenUIOpened = false;
+    public bool IsScreenUIOpened { get {  return isScreenUIOpened; } }
     private void Awake()
     {
         SetInstance();
@@ -53,20 +54,19 @@ public class UIManager : Singleton<UIManager>
     }
 
     // 지정된 스크린UI를 딕셔너리에서 불러와 활성화합니다.
-    // UI가 뜨는 동안에는 게임이 정지합니다.
     public void OpenScreenUI(string name)
     {
-        if (isScreenUIOpend)
+        if (isScreenUIOpened)
         {
             return;
         }
-        Time.timeScale = 0.0f;
-        isScreenUIOpend = true;
+        isScreenUIOpened = true;
         currentUI = screenUIDict[name];
         currentUI.SetActive(true);
     }
     public void OpenPauseUI()
     {
+        Time.timeScale = 0.0f;
         OpenScreenUI("pause");
     }
     public void OpenGameOverUI()
@@ -86,7 +86,7 @@ public class UIManager : Singleton<UIManager>
     public void ExitUI()
     {
         Time.timeScale = 1.0f;
-        isScreenUIOpend = false;
+        isScreenUIOpened = false;
         currentUI.SetActive(false);
     }
 

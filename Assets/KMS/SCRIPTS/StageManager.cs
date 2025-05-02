@@ -29,6 +29,10 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] public UnityEvent onStageValueChanged;
     [SerializeField] public UnityEvent onSeconds;
 
+    // 추후 추가될 가능성이 있는 이벤트들
+    [SerializeField] public UnityEvent onStageCleared;
+    [SerializeField] public UnityEvent onStageFailed;
+
     public int StageScore
     {
         get
@@ -62,7 +66,10 @@ public class StageManager : Singleton<StageManager>
     private void Update()
     {
         // 시간 측정 코드
-        oneSec += Time.deltaTime;
+        if (!UIManager.Instance.IsScreenUIOpened)
+        {
+            oneSec += Time.deltaTime;
+        }
         if (oneSec >= 1)
         {
             oneSec = 0;
@@ -71,14 +78,14 @@ public class StageManager : Singleton<StageManager>
         }
 
         // 테스트 코드 (스테이지 클리어, 실패)
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    StageFailed();
-        //}
-        //if (Input.GetKeyDown(KeyCode.I))
-        //{
-        //    StageClear();
-        //}
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            StageFailed();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            StageClear();
+        }
     }
 
     // onSceneLoaded 이벤트에 할당되어 씬이 바뀔때 씬 인덱스별로 값을 지정합니다.
@@ -106,12 +113,14 @@ public class StageManager : Singleton<StageManager>
         }
         else
         {
+            onStageFailed?.Invoke();
             UIManager.Instance.OpenStageFailedUI();
         }
     }
     // 스테이지를 클리어시킵니다.
     public void StageClear()
     {
+        onStageCleared?.Invoke();
         UIManager.Instance.OpenStageClearUI();
     }
 }

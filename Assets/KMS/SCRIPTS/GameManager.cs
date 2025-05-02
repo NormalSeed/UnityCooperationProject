@@ -42,6 +42,8 @@ public class GameManager : Singleton<GameManager>
     // 새로운 씬이 로드될 때 불러올 이벤트입니다.
     [SerializeField] public UnityEvent<int> onSceneLoaded;
 
+    [SerializeField] public UnityEvent onGameovered;
+
     // 바로 이전에 열렸던 씬의 인덱스를 저장합니다. 최초 -1
     private int lastOpenedSceneIndex;
     public int LastOpendSceneIndex { get { return lastOpenedSceneIndex; } }
@@ -155,6 +157,7 @@ public class GameManager : Singleton<GameManager>
     // 게임을 오버시킵니다.
     public void GameOver()
     {
+        onGameovered?.Invoke();
         UIManager.Instance.OpenGameOverUI();
     }
 
