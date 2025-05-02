@@ -65,8 +65,8 @@ public class GameManager : Singleton<GameManager>
     }
     private void Update()
     {
-        // 테스트 코드
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // 일시정지 활성화
+        if (Input.GetKeyDown(KeyCode.Escape) && currentSceneIndex != 0)
         {
             Pause();
         }
@@ -142,16 +142,23 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadSceneAsync(currentSceneIndex);
     }
 
+    // 현재 씬을 다시 로드합니다 (재시작 기능)
     public void LoadCurrentScene() => LoadScene(currentSceneIndex);
+
+    // 처음 씬을 로드합니다 (타이틀 씬으로 돌아가는 기능)
     public void LoadFirstScene()
     {
         LoadScene(0);
         lifePoint = initialLifePoint;
     }
+
+    // 게임을 오버시킵니다.
     public void GameOver()
     {
         UIManager.Instance.OpenGameOverUI();
     }
+
+    // 게임을 일시정지합니다.
     public void Pause()
     {
         UIManager.Instance.OpenPauseUI();

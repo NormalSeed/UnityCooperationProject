@@ -61,7 +61,7 @@ public class StageManager : Singleton<StageManager>
 
     private void Update()
     {
-        // 테스트 코드
+        // 시간 측정 코드
         oneSec += Time.deltaTime;
         if (oneSec >= 1)
         {
@@ -69,14 +69,16 @@ public class StageManager : Singleton<StageManager>
             seconds++;
             onSeconds?.Invoke();
         }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            StageFailed();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            StageClear();
-        }
+
+        // 테스트 코드 (스테이지 클리어, 실패)
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    StageFailed();
+        //}
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    StageClear();
+        //}
     }
 
     // onSceneLoaded 이벤트에 할당되어 씬이 바뀔때 씬 인덱스별로 값을 지정합니다.
@@ -92,6 +94,9 @@ public class StageManager : Singleton<StageManager>
         maxStageScore = maxStageScores[SceneIndex];
         onStageValueChanged?.Invoke();
     }
+
+    // 스테이지 실패 함수입니다.
+    // 자동으로 목숨을 1 차감하며, 0일 경우 게임 오버 함수를 불러옵니다.
     public void StageFailed()
     {
         GameManager.Instance.LifePoint--;
@@ -104,7 +109,7 @@ public class StageManager : Singleton<StageManager>
             UIManager.Instance.OpenStageFailedUI();
         }
     }
-    // 레벨 클리어 UI를 불러오는 함수입니다.
+    // 스테이지를 클리어시킵니다.
     public void StageClear()
     {
         UIManager.Instance.OpenStageClearUI();
