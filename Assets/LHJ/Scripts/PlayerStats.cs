@@ -22,7 +22,7 @@ public class PlayerStats : MonoBehaviour
     }
     public void IncreaseScore(int amount)
     {
-        score += amount;
+        StageManager.Instance.StageScore++;
     }
 
     public bool Heal(int amount)
