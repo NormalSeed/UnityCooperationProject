@@ -23,7 +23,7 @@ public class InfoUI : MonoBehaviour
         stageName.text = $"Stage : {StageManager.Instance.StageName}";
         life.text = $"Life : {GameManager.Instance.LifePoint}";
         score.text = $"Score : {StageManager.Instance.StageScore} / {StageManager.Instance.MaxStageScore}";
-        seconds.text = $"Time : 0";
+        seconds.text = $"Time : {StageManager.Instance.seconds}";
     }
     public void UpdateLifePoint()
     {
