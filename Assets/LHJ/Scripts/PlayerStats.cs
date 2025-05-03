@@ -8,7 +8,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Rigidbody rigid;
     [SerializeField] private float playerSpeed;
     [SerializeField] private int attack;
-    [SerializeField] private int score;
     [SerializeField] private int maxHp;
     [SerializeField] private int currentHp;
 
@@ -22,7 +21,7 @@ public class PlayerStats : MonoBehaviour
     }
     public void IncreaseScore(int amount)
     {
-        score += amount;
+        StageManager.Instance.StageScore++;
     }
 
     public bool Heal(int amount)
