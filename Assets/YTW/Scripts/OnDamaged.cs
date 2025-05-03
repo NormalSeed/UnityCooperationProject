@@ -39,6 +39,7 @@ public class OnDamaged : MonoBehaviour
             if (gameObject.CompareTag("Player"))
             {
                 gameObject.SetActive(false);
+                StageManager.Instance.StageFailed();
             }
             if (pooledMonster != null)
             {
@@ -47,7 +48,6 @@ public class OnDamaged : MonoBehaviour
             }
         }
     }
-
     public bool Heal(int amount)
     {
         if (CurHP >= MaxHP)

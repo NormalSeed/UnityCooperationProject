@@ -70,7 +70,7 @@ public class MonsterController : MonoBehaviour
 
     private void DetectPlayer()
     {
-
+        OnDamaged targetHP = target.GetComponent<OnDamaged>();
         monster.isStopped = false;
         monster.SetDestination(target.position);
 
@@ -79,6 +79,7 @@ public class MonsterController : MonoBehaviour
         // 사정거리 안에 들어왔을 때 수동으로 회전 
         if (attackable.CanAttack(target))
         {
+            if (targetHP.CURHP > 0)
             attackable.Attack(target); 
         }
         else
