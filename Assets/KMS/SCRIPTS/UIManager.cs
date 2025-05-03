@@ -29,6 +29,7 @@ public class UIManager : Singleton<UIManager>
     {
         Init();
         GameManager.Instance.onSceneLoaded.AddListener(ToggleInfoUI);
+        ToggleInfoUI(GameManager.Instance.CurrentSceneIndex);
     }
 
     // 세팅을 초기화합니다.
