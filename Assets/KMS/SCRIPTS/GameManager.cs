@@ -61,6 +61,10 @@ public class GameManager : Singleton<GameManager>
     {
         SetInstance();
     }
+    private void OnEnable()
+    {
+        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    }
     private void Start()
     {
         Init();
@@ -79,7 +83,7 @@ public class GameManager : Singleton<GameManager>
     {
         lifePoint = initialLifePoint;
         lastOpenedSceneIndex = -1;
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
     // 지정한 인덱스의 씬으로 이동합니다.
     public void LoadScene(int index)

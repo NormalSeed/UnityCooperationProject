@@ -61,6 +61,7 @@ public class StageManager : Singleton<StageManager>
     private void Start()
     {
         GameManager.Instance.onSceneLoaded.AddListener(SetStageValues);
+        SetStageValues(GameManager.Instance.CurrentSceneIndex);
     }
 
     private void Update()
