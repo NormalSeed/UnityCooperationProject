@@ -11,6 +11,7 @@ public class RangedAttack : MonoBehaviour, IAttackable
     [SerializeField] float bulletSpeed;
     [SerializeField] Transform bulletPos;
     [SerializeField] BulletPool bulletpool;
+    [SerializeField] GameObject soundPrefab;
 
     private float lastAttackTime;
 
@@ -25,6 +26,7 @@ public class RangedAttack : MonoBehaviour, IAttackable
         lastAttackTime = Time.time;
 
         Fire();
+        Instantiate(soundPrefab, bulletPos.position, Quaternion.identity);
     }
     private void Fire()
     {
