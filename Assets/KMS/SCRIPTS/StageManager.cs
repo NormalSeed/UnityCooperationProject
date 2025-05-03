@@ -7,7 +7,9 @@ using UnityEngine.Events;
 // 게임매니저 게임오브젝트에 포함되어 있습니다.
 public class StageManager : Singleton<StageManager>
 {
+    // 스테이지의 이름입니다.
     [SerializeField] string stageName;
+    public string StageName { get { return stageName; } }
     // 스테이지에서 필요한 점수입니다. 해당 점수를 모두 충족해야 레벨 클리어가 가능합니다.
     [SerializeField] int maxStageScore;
     [SerializeField] int stageScore;
@@ -18,7 +20,6 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] List<int> maxStageScores;
     public int seconds = 0;
     private float oneSec = 0;
-    public string StageName {  get { return stageName; } }
     public int MaxStageScore { get { return maxStageScore; } }
 
     // 점수 충족 여부를 확인합니다.

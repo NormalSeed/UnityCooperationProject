@@ -122,17 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &398643869 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -1764836040462432903, guid: 064323a904d9cc448b9785e5b4d247a1, type: 3}
-  m_PrefabInstance: {fileID: 1060367380}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c13f9a1a17ca5418a8da71205a5377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &714640138
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +202,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3387562503118375261, guid: 064323a904d9cc448b9785e5b4d247a1, type: 3}
+      propertyPath: maxStageScores.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6356456123985732867, guid: 064323a904d9cc448b9785e5b4d247a1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -277,7 +270,7 @@ PrefabInstance:
     - target: {fileID: 354607173283696324, guid: 261eea32a8dd25140883c9e13d21cf8c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 398643869}
+      objectReference: {fileID: 0}
     - target: {fileID: 354607173283696324, guid: 261eea32a8dd25140883c9e13d21cf8c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2

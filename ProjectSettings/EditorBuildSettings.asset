@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/KMS/SCENES/Stage2Scene.unity
     guid: 90255d6189cbd2e43b4961d79a90f370
+  - enabled: 1
+    path: Assets/KMS/SCENES/Stage3Scene.unity
+    guid: eaca88a0b77885f409feb0e65902d8ec
+  - enabled: 1
+    path: Assets/KMS/SCENES/Stage4Scene.unity
+    guid: d7b9fc6cac2800f459ac3bc16f05ce8d
   m_configObjects: {}
