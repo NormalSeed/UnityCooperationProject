@@ -16,7 +16,7 @@ public class PotionItem : Item
     public override void RunItem()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        PlayerStats playerController = player.GetComponent<PlayerStats>();
+        OnDamaged playerController = player.GetComponent<OnDamaged>();
         if (playerController != null)
         {
             // 체력 회복 조건
