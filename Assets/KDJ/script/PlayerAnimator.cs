@@ -35,7 +35,7 @@ public class PlayerAnimator : MonoBehaviour
     void GetInput()
     {
         hAxis = Input.GetAxisRaw("Horizontal");
-        vAxis = Input.GetAxisRaw("vertical");
+        vAxis = Input.GetAxisRaw("Vertical");
         wDown = Input.GetButtonDown("Walk");
         jDown = Input.GetButtonDown("Jump");
     }
@@ -73,3 +73,4 @@ public class PlayerAnimator : MonoBehaviour
     }
 
 }
+//수정코드
