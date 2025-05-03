@@ -22,9 +22,7 @@ public class MeleeAttack : MonoBehaviour, IAttackable
         lastAttackTime = Time.time;
 
         OnDamaged targetHP = target.GetComponent<OnDamaged>();
-        if (targetHP.gameObject.CompareTag("Player"))
-        {
-            targetHP?.TakeDamaged(damage);
-        }
+        targetHP?.TakeDamaged(damage);
+
     }
 }

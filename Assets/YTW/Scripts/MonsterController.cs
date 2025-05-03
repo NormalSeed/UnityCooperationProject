@@ -37,7 +37,7 @@ public class MonsterController : MonoBehaviour
     private void InitTarget()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
+        if (playerObject != null && playerObject.activeInHierarchy)
         {
             target = playerObject.transform;
             if (monster != null)
@@ -59,12 +59,12 @@ public class MonsterController : MonoBehaviour
         {
             return;
         }
-        if (target == null)
+        if (target == null || !target.gameObject.activeInHierarchy) 
         {
-            InitTarget();
+            InitTarget(); // 타겟 재설정
             return;
         }
-            
+
         DetectPlayer();
     }
 

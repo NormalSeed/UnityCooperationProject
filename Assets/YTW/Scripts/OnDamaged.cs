@@ -5,8 +5,8 @@ public class OnDamaged : MonoBehaviour
 {
     [SerializeField] int MaxHP;
     [SerializeField] int CurHP;
+    float amount = 1;
     public int CURHP { get { return CurHP; } }
-    [SerializeField] float amount = 1;
     [SerializeField] PooledMonster pooledMonster;
 
     private HealthBar healthBar;
@@ -16,7 +16,7 @@ public class OnDamaged : MonoBehaviour
     {
         CurHP = MaxHP;
         healthBar = GetComponentInChildren<HealthBar>();
-        if (pooledMonster == null)
+        if (pooledMonster == null && CompareTag("Monster"))
         {
             pooledMonster = GetComponent<PooledMonster>();
             if (pooledMonster == null)
@@ -36,20 +36,27 @@ public class OnDamaged : MonoBehaviour
         Debug.Log($"{damage}데미지 받아서 현재 채력 {CurHP}");
         if (CurHP <= 0)
         {
-            // 테스트용 코드
             if (gameObject.CompareTag("Player"))
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
             if (pooledMonster != null)
             {
                 gameObject.SetActive(false);
                 pooledMonster.ReturnPool();
             }
-            else
-            {
-                Debug.LogError($"pooledMonster가 null입니다.");
-            }
         }
+    }
+
+    public bool Heal(int amount)
+    {
+        if (CurHP >= MaxHP)
+        {
+            return false;
+        }
+        CurHP += amount;
+        if (CurHP > MaxHP)
+            CurHP = MaxHP;
+        return true;
     }
 }
