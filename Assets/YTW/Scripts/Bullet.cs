@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] PooledBullet pooledBullet;
     [SerializeField] int damage;
-
+    [SerializeField] GameObject bulletEffectPrefab;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -20,7 +20,8 @@ public class Bullet : MonoBehaviour
         }
         if (hitObject.layer == LayerMask.NameToLayer("Wall") || hitObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            // 터지는 이팩트 
+            GameObject effect = Instantiate(bulletEffectPrefab, collision.transform.position, Quaternion.identity);
+            Destroy(effect, 1f);
         }
         pooledBullet.ReturnPool();
     }

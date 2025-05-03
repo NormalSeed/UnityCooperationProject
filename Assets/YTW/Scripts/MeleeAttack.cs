@@ -5,6 +5,7 @@ public class MeleeAttack : MonoBehaviour, IAttackable
     [SerializeField] int damage;
     [SerializeField] float attackRange;
     [SerializeField] float attackCoolTime;
+    [SerializeField] GameObject soundPrefab;
 
     private float lastAttackTime;
 
@@ -23,6 +24,6 @@ public class MeleeAttack : MonoBehaviour, IAttackable
 
         OnDamaged targetHP = target.GetComponent<OnDamaged>();
         targetHP?.TakeDamaged(damage);
-
+        Instantiate(soundPrefab, transform.position, Quaternion.identity);
     }
 }
