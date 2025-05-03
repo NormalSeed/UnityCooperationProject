@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
         if (targetHP != null && targetHP.gameObject.CompareTag("Player"))
         {
             targetHP.TakeDamaged(damage);
-            
+
         }
         if (hitObject.layer == LayerMask.NameToLayer("Wall") || hitObject.layer == LayerMask.NameToLayer("Obstacle"))
         {

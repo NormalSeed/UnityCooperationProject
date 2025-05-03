@@ -37,7 +37,7 @@ public class MonsterController : MonoBehaviour
     private void InitTarget()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
+        if (playerObject != null && playerObject.activeInHierarchy)
         {
             target = playerObject.transform;
             if (monster != null)
@@ -59,18 +59,18 @@ public class MonsterController : MonoBehaviour
         {
             return;
         }
-        if (target == null)
+        if (target == null || !target.gameObject.activeInHierarchy) 
         {
-            InitTarget();
+            InitTarget(); // 타겟 재설정
             return;
         }
-            
+
         DetectPlayer();
     }
 
     private void DetectPlayer()
     {
-
+        OnDamaged targetHP = target.GetComponent<OnDamaged>();
         monster.isStopped = false;
         monster.SetDestination(target.position);
 
@@ -79,6 +79,7 @@ public class MonsterController : MonoBehaviour
         // 사정거리 안에 들어왔을 때 수동으로 회전 
         if (attackable.CanAttack(target))
         {
+            if (targetHP.CURHP > 0)
             attackable.Attack(target); 
         }
         else
