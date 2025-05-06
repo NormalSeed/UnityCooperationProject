@@ -9,15 +9,16 @@ public class Shooter : MonoBehaviour
 
     [Range(10, 30)]
     [SerializeField] float bulletSpeed;
+    [SerializeField] Transform player;
 
     private Vector3 bulletSpawnPos;
+    private Vector3 fixedForward = Vector3.forward;
 
     public void Fire()
     {
-        GetDirection();
         PooledBullet bullet = (PooledBullet)bulletPool.GetObject(bulletSpawnPos, transform.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * bulletSpeed;
+        rb.velocity = fixedForward * bulletSpeed;
     }
 
     private void GetDirection()
@@ -29,12 +30,14 @@ public class Shooter : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = targetRotation;
+            fixedForward = direction.normalized;
         }
-        bulletSpawnPos = transform.position + transform.forward * 1.5f;
+        bulletSpawnPos = player.position + fixedForward * 1.5f;
     }
 
     public void Update()
     {
+        GetDirection();
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Fire();
