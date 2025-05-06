@@ -3447,11 +3447,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 229175462628830354, guid: d1237f07bf5f9744eb92eeda3091afc5, type: 3}
       propertyPath: maxSpd
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 229175462628830354, guid: d1237f07bf5f9744eb92eeda3091afc5, type: 3}
       propertyPath: spdUpFactor
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8685099460672038456, guid: d1237f07bf5f9744eb92eeda3091afc5, type: 3}
       propertyPath: m_LocalScale.x

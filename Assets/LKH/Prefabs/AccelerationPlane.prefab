@@ -119,5 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ae89b0e047cf5c4586321dcd1086ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spdUpFactor: 3
-  maxSpd: 15
+  spdUpFactor: 5
+  maxSpd: 100
