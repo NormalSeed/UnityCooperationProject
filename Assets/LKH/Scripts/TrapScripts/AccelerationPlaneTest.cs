@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AccelerationPlaneTest : MonoBehaviour
 {
-    [Range(1f, 5f)]
+    [Range(1f, 10f)]
     [SerializeField] float spdUpFactor;
 
-    [Range(10f, 20f)]
+    [Range(10f, 100f)]
     [SerializeField] float maxSpd;
 
     private void OnCollisionStay(Collision collision)
