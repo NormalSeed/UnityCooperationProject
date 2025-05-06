@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &333320273518583861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6356456123985732867}
+  - component: {fileID: 8073550679287731071}
+  - component: {fileID: 7055582746120181539}
+  - component: {fileID: 3387562503118375261}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6356456123985732867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333320273518583861}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8073550679287731071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333320273518583861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c13f9a1a17ca5418a8da71205a5377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTitle: BALL GAME
+  lifePoint: 0
+  initialLifePoint: 5
+  onGameOvered:
+    m_PersistentCalls:
+      m_Calls: []
+  onLevelCleared:
+    m_PersistentCalls:
+      m_Calls: []
+  onLifePointChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7055582746120181539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333320273518583861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80480fe814f38342bcd4f070d1b2b78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverUI: {fileID: 7166210187716250623, guid: d5ad268ab2118394798a9c81ef2e7d0c, type: 3}
+  pauseUI: {fileID: 7166210187716250623, guid: b9305ce652c6ad34fb8fd0ee62e362c1, type: 3}
+  stageClearUI: {fileID: 7166210187716250623, guid: 669c2f0722c7b0b4a9c27a171b6949b7, type: 3}
+  stageFailedUI: {fileID: 7166210187716250623, guid: ec357ba5690e2614985d2e184514ea8f, type: 3}
+  infoUI: {fileID: 2334004622502291711, guid: 42cfec1ab0c8b9349ab39b38fcb34bff, type: 3}
+--- !u!114 &3387562503118375261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333320273518583861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ddec5cc78e6db4aabaa52e18fcd744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageName: 
+  maxStageScore: 0
+  stageScore: 0
+  stageNames:
+  - Title
+  - Stage1
+  - Stage2
+  - Stage3
+  - LastStage
+  maxStageScores: 000000000b00000016000000210000002c000000
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls: []

@@ -7,6 +7,7 @@ public class AttackItem : Item
 {
     [SerializeField] private int attackIncrease;
     [SerializeField] private float buffTime;
+    [SerializeField] private GameObject powerupEffect;
 
 
     private void OnTriggerEnter(Collider other)
@@ -16,21 +17,41 @@ public class AttackItem : Item
             RunItem();
         }
     }
+    // 아이템 효과 실행
     public override void RunItem()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Testplayercontroll playerController = player.GetComponent<Testplayercontroll>();
+        PlayerStats playerController = player.GetComponent<PlayerStats>();
         if (playerController != null)
         {
             playerController.StartCoroutine(TemporaryAttackBuff(playerController));
+            // Effect 효과 실행
+            if (powerupEffect != null)
+            {
+                GameObject effect = Instantiate(powerupEffect, player.transform.position, Quaternion.identity);
+
+                // 회전 영향 없이 위치만 따라가게
+                EffectFollowPlayer follow = effect.AddComponent<EffectFollowPlayer>();
+                follow.target = player.transform;
+                Destroy(effect, buffTime);  // 버프 시간동안 이펙트가 실행되고 그 후 이펙트 삭제
+            }
+
+            // UI 실행
+            BuffText ui = FindObjectOfType<BuffText>();
+            if (ui != null)
+            {
+                // 버프 지속 시간 동안 해당하는 UI 텍스트를 화면에 표시
+                ui.ShowBuff("Attack", buffTime);
+            }
         }
 
         Destroy(gameObject); 
     }
-    private IEnumerator TemporaryAttackBuff(Testplayercontroll player)
+    // 일정시간 동안 공격력 증가 및 복구
+    private IEnumerator TemporaryAttackBuff(PlayerStats player)
     {
-        player.IncreaseAttack(attackIncrease);
-        yield return new WaitForSeconds(buffTime);
-        player.IncreaseAttack(-attackIncrease);
+        player.IncreaseAttack(attackIncrease);      // 공격력 증가
+        yield return new WaitForSeconds(buffTime);  // 버프 지속 시간
+        player.IncreaseAttack(-attackIncrease);     // 원래 공격력을 복구
     }
 }

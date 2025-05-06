@@ -120,3 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackIncrease: 3
   buffTime: 5
+  powerupEffect: {fileID: 572420816548206666, guid: 1b56a3ab4afd11d4db07245a18cd4cf2, type: 3}
