@@ -21,7 +21,7 @@ public class AttackItem : Item
     public override void RunItem()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        PlayerStats playerController = player.GetComponent<PlayerStats>();
+        PB playerController = player.GetComponent<PB>();
         if (playerController != null)
         {
             playerController.StartCoroutine(TemporaryAttackBuff(playerController));
@@ -48,7 +48,7 @@ public class AttackItem : Item
         Destroy(gameObject); 
     }
     // 일정시간 동안 공격력 증가 및 복구
-    private IEnumerator TemporaryAttackBuff(PlayerStats player)
+    private IEnumerator TemporaryAttackBuff(PB player)
     {
         player.IncreaseAttack(attackIncrease);      // 공격력 증가
         yield return new WaitForSeconds(buffTime);  // 버프 지속 시간
