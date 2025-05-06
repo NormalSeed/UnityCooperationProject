@@ -10,13 +10,13 @@ public class PooledBullet : MonoBehaviour, IPooledObject
 
     public void ResetObject()
     {
-        // ÃÊ±âÈ­ ÀÛ¾÷
+        // ì´ˆê¸°í™” ì‘ì—…
         gameObject.SetActive(false);
     }
 
     public GameObject GetGameObject()
     {
-        // BulletPool¿¡¼­ »ç¿ëÇÒ GameObject ¹İÈ¯
+        // BulletPoolì—ì„œ ì‚¬ìš©í•  GameObject ë°˜í™˜
         return gameObject;
     }
 
@@ -27,12 +27,17 @@ public class PooledBullet : MonoBehaviour, IPooledObject
 
     private void Update()
     {
-       // returnTime ¸¸Å­ÀÇ ½Ã°£ÀÌ Èå¸£¸é Ç®¿¡ ¹İÈ¯
+       // returnTime ë§Œí¼ì˜ ì‹œê°„ì´ íë¥´ë©´ í’€ì— ë°˜í™˜
         timer -= Time.deltaTime;
        if (timer <= 0)
        {
            ReturnPool();
        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        ReturnPool();
     }
     public void ReturnPool()
     {
