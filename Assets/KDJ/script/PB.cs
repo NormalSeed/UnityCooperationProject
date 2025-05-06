@@ -13,7 +13,7 @@ public class PB : MonoBehaviour
     bool isJump;
     Rigidbody rigid;
     AudioSource audio;
-    public GameManagerLogic manager;
+
     void Awake()
     {
         isJump = false;
@@ -51,19 +51,8 @@ public class PB : MonoBehaviour
             ItemCount++;
             audio.Play();
             other.gameObject.SetActive(false);
-            manager.GetItem(ItemCount);
-        }
-        else if (other.tag == "Point")
-        {
-            if (manager.totalItemCount == ItemCount)
-            {
-                //clear
-                SceneManager.LoadScene("stage_" + (manager.stage + 1).ToString());
-            }
-            else
-            {
-                SceneManager.LoadScene("stage_" + manager.stage.ToString());
-            }
+
         }
     }
 }
+
