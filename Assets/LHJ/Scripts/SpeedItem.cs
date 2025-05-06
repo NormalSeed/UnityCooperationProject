@@ -19,7 +19,7 @@ public class SpeedItem : Item
     public override void RunItem()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        PlayerStats playerController = player.GetComponent<PlayerStats>();
+        PB playerController = player.GetComponent<PB>();
         if (playerController != null)
         {
             playerController.StartCoroutine(TemporaryAttackBuff(playerController));
@@ -46,7 +46,7 @@ public class SpeedItem : Item
     }
 
     // 일정 시간 동안 이동속도 증가 및 복구
-    private IEnumerator TemporaryAttackBuff(PlayerStats player)
+    private IEnumerator TemporaryAttackBuff(PB player)
     {
         player.IncreaseSpeed(speedIncrease);
         yield return new WaitForSeconds(buffTime);

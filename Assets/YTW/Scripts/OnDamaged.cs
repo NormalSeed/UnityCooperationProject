@@ -38,15 +38,24 @@ public class OnDamaged : MonoBehaviour
         {
             if (gameObject.CompareTag("Player"))
             {
-                gameObject.SetActive(false);
-                StageManager.Instance.StageFailed();
+                PlayerDie();
             }
             if (pooledMonster != null)
             {
-                gameObject.SetActive(false);
-                pooledMonster.ReturnPool();
+                returnMonster();
             }
         }
+    }
+    void PlayerDie()
+    {
+        gameObject.SetActive(false);
+        StageManager.Instance.StageFailed();
+    }
+
+    void returnMonster()
+    {
+        gameObject.SetActive(false);
+        pooledMonster.ReturnPool();
     }
     public bool Heal(int amount)
     {
