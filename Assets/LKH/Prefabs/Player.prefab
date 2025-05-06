@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6845309445483451645}
   - component: {fileID: 8381243986527022444}
   - component: {fileID: 383622167921840016}
+  - component: {fileID: 4639471605539770594}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -150,3 +151,18 @@ MonoBehaviour:
   ItemCount: 0
   attack: 10
   playerSpeed: 5
+--- !u!114 &4639471605539770594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6669484866285966142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf66a9dfa556a004c91f90f7adf9e1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 5
+  CurHP: 5
+  pooledMonster: {fileID: 0}
