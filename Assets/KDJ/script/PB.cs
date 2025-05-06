@@ -11,6 +11,10 @@ public class PB : MonoBehaviour
     private Rigidbody rigid;
     private AudioSource audio;
 
+    // 플레이어 능력치 변수
+    public int attack = 10;
+    public float playerSpeed = 5f;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -31,7 +35,7 @@ public class PB : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        rigid.AddForce(new Vector3(h, 0, v), ForceMode.Impulse);
+        rigid.AddForce(new Vector3(h, 0, v) * playerSpeed, ForceMode.Impulse);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -53,6 +57,26 @@ public class PB : MonoBehaviour
         }
     }
 
-    // 공격력, 속도, 점수 관련 메서드는 다른 스크립트PlayerStats아니면GameManager로 분리해서 넣어야함
+    // 능력치 증가 메서드
+    public void IncreaseAttack(int amount)
+    {
+        attack += amount;
+        Debug.Log("공격력 증가: " + attack);
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        playerSpeed += amount;
+        Debug.Log("속도 증가: " + playerSpeed);
+    }
+
+    public void IncreaseScore(int amount)
+    {
+        if (StageManager.Instance != null)
+        {
+            StageManager.Instance.StageScore += amount;
+            Debug.Log("점수 증가: " + StageManager.Instance.StageScore);
+        }
+    }
 }
-//확인
+
