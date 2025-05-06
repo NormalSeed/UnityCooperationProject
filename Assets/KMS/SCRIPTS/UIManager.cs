@@ -67,7 +67,6 @@ public class UIManager : Singleton<UIManager>
     }
     public void OpenPauseUI()
     {
-        Time.timeScale = 0.0f;
         OpenScreenUI("pause");
     }
     public void OpenGameOverUI()

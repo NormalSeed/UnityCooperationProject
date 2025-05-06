@@ -34,6 +34,8 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] public UnityEvent onStageCleared;
     [SerializeField] public UnityEvent onStageFailed;
 
+    private GameObject player;
+
     public int StageScore
     {
         get
@@ -62,6 +64,7 @@ public class StageManager : Singleton<StageManager>
     private void Start()
     {
         GameManager.Instance.onSceneLoaded.AddListener(SetStageValues);
+
         SetStageValues(GameManager.Instance.CurrentSceneIndex);
     }
 
@@ -77,6 +80,14 @@ public class StageManager : Singleton<StageManager>
             oneSec = 0;
             seconds++;
             onSeconds?.Invoke();
+        }
+        if (player != null)
+        {
+            if (player.transform.position.y < -10)
+            {
+                StageFailed();
+                Debug.Log("a");
+            }
         }
     }
 
@@ -106,6 +117,7 @@ public class StageManager : Singleton<StageManager>
         else
         {
             onStageFailed?.Invoke();
+            Time.timeScale = 0.0f;
             UIManager.Instance.OpenStageFailedUI();
         }
     }
@@ -113,6 +125,7 @@ public class StageManager : Singleton<StageManager>
     public void StageClear()
     {
         onStageCleared?.Invoke();
+        Time.timeScale = 0.0f;
         UIManager.Instance.OpenStageClearUI();
     }
 }

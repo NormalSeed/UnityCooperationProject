@@ -162,12 +162,14 @@ public class GameManager : Singleton<GameManager>
     public void GameOver()
     {
         onGameovered?.Invoke();
+        Time.timeScale = 0.0f;
         UIManager.Instance.OpenGameOverUI();
     }
 
     // 게임을 일시정지합니다.
     public void Pause()
     {
+        Time.timeScale = 0.0f;
         UIManager.Instance.OpenPauseUI();
     }
 }
