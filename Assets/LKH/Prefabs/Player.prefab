@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2164884307889646682}
   - component: {fileID: 6845309445483451645}
   - component: {fileID: 8381243986527022444}
-  - component: {fileID: 383622167921840016}
+  - component: {fileID: 6956037539318070097}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -134,7 +134,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &383622167921840016
+--- !u!114 &6956037539318070097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,10 +143,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6669484866285966142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 880a4a0666485404a8047079d65bd9d9, type: 3}
+  m_Script: {fileID: 11500000, guid: eb28778401aa04afcbb181c09a0cf996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 5
+  jumpPower: 10
   ItemCount: 0
-  attack: 10
-  playerSpeed: 5
+  manager: {fileID: 0}
