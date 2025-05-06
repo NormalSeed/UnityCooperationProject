@@ -1,33 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-//이 코드는 공이 이동하고, 점프하며, 아이템을 먹고, 목표 지점에 도달하면 다음 스테이지로 이동하는 구조에서 사용
-//플레이어가 공을 굴리며 장애물을 피하고 아이템을 전부 수집해서 목표 지점에 도착해야 클리어
 public class PB : MonoBehaviour
 {
-    public float jumpPower;
-    public int ItemCount;
-    bool isJump;
-    Rigidbody rigid;
-    AudioSource audio;
+    public float jumpPower = 5f;
+    public int ItemCount = 0;
+
+    private bool isJump = false;
+    private Rigidbody rigid;
+    private AudioSource audio;
 
     void Awake()
     {
-        isJump = false;
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
     }
+
     void Update()
     {
-        if (Input.GetButtonDown("Jump") && isJump == false)
+        if (Input.GetButtonDown("Jump") && !isJump)
         {
             isJump = true;
-            rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
+            rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
     }
+
     void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
@@ -38,7 +36,7 @@ public class PB : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.CompareTag("Floor"))
         {
             isJump = false;
         }
@@ -46,13 +44,15 @@ public class PB : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Item")
+        if (other.CompareTag("Item"))
         {
             ItemCount++;
             audio.Play();
             other.gameObject.SetActive(false);
-
+            Debug.Log("Item Collected: " + ItemCount);
         }
     }
-}
 
+    // 공격력, 속도, 점수 관련 메서드는 다른 스크립트PlayerStats아니면GameManager로 분리해서 넣어야함
+}
+//확인
