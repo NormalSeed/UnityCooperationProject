@@ -49,16 +49,13 @@ MonoBehaviour:
   gameTitle: BALL GAME
   lifePoint: 0
   initialLifePoint: 5
-  onGameOvered:
-    m_PersistentCalls:
-      m_Calls: []
-  onLevelCleared:
-    m_PersistentCalls:
-      m_Calls: []
   onLifePointChanged:
     m_PersistentCalls:
       m_Calls: []
   onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameovered:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &7055582746120181539
@@ -98,8 +95,19 @@ MonoBehaviour:
   - Stage1
   - Stage2
   - Stage3
+  - Stage4
   - LastStage
-  maxStageScores: 000000000b00000016000000210000002c000000
-  onValueChanged:
+  maxStageScores: 000000000400000001000000040000000c00000005000000
+  seconds: 0
+  onStageValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onSeconds:
+    m_PersistentCalls:
+      m_Calls: []
+  onStageCleared:
+    m_PersistentCalls:
+      m_Calls: []
+  onStageFailed:
     m_PersistentCalls:
       m_Calls: []
