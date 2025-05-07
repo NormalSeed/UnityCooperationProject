@@ -19,6 +19,7 @@ public class PB : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
+        attack = 1;
     }
 
     void Update()
