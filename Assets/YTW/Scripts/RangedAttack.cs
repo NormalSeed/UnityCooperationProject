@@ -7,7 +7,7 @@ public class RangedAttack : MonoBehaviour, IAttackable
 {    
     [SerializeField] float attackRange;
     [SerializeField] float attackCoolTime;
-    [Range(10,30)]
+    [Range(30,50)]
     [SerializeField] float bulletSpeed;
     [SerializeField] Transform bulletPos;
     [SerializeField] BulletPool bulletpool;
@@ -26,8 +26,13 @@ public class RangedAttack : MonoBehaviour, IAttackable
         lastAttackTime = Time.time;
 
         Fire();
-        Instantiate(soundPrefab, bulletPos.position, Quaternion.identity);
-        Destroy(soundPrefab, 0.1f);
+        GameObject soundInstance = Instantiate(soundPrefab, transform.position, Quaternion.identity);
+        AudioSource audio = soundInstance.GetComponent<AudioSource>();
+        if (audio != null)
+        {
+            audio.Play();
+            Destroy(soundInstance, audio.clip.length);
+        }
     }
     private void Fire()
     {
