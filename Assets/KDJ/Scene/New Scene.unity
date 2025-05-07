@@ -6131,7 +6131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db988db135353b4a924af88e723727b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreIncrease: 10
+  scoreIncrease: 1
   scoreEffect: {fileID: 0}
 --- !u!4 &2011619600 stripped
 Transform:

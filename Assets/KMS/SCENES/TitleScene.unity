@@ -203,6 +203,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 3387562503118375261, guid: 064323a904d9cc448b9785e5b4d247a1, type: 3}
+      propertyPath: maxStageScores.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3387562503118375261, guid: 064323a904d9cc448b9785e5b4d247a1, type: 3}
       propertyPath: maxStageScores.Array.data[2]
       value: 3
       objectReference: {fileID: 0}
