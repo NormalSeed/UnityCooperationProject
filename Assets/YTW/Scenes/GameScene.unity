@@ -3768,6 +3768,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 383622167921840016, guid: 0880f50b9444b484da3145dbd1a33178, type: 3}
+      propertyPath: attack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 383622167921840016, guid: 0880f50b9444b484da3145dbd1a33178, type: 3}
       propertyPath: jumpPower
       value: 30
       objectReference: {fileID: 0}
@@ -3781,7 +3785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4639471605539770594, guid: 0880f50b9444b484da3145dbd1a33178, type: 3}
       propertyPath: MaxHP
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6003497566944943962, guid: 0880f50b9444b484da3145dbd1a33178, type: 3}
       propertyPath: m_LocalPosition.x
