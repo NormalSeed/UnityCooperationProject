@@ -25,5 +25,6 @@ public class MeleeAttack : MonoBehaviour, IAttackable
         OnDamaged targetHP = target.GetComponent<OnDamaged>();
         targetHP?.TakeDamaged(damage);
         Instantiate(soundPrefab, transform.position, Quaternion.identity);
+        Destroy(soundPrefab, 0.1f);
     }
 }
