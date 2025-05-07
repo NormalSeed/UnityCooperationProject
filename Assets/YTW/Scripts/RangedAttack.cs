@@ -27,6 +27,7 @@ public class RangedAttack : MonoBehaviour, IAttackable
 
         Fire();
         Instantiate(soundPrefab, bulletPos.position, Quaternion.identity);
+        Destroy(soundPrefab, 0.1f);
     }
     private void Fire()
     {
