@@ -4795,6 +4795,10 @@ PrefabInstance:
       propertyPath: padPower
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3309810944898664636, guid: ac24abfdd84d6ae4ba8ee39f88779ce4, type: 3}
+      propertyPath: tiltSpeed
+      value: 900
+      objectReference: {fileID: 0}
     - target: {fileID: 3359226135561458240, guid: ac24abfdd84d6ae4ba8ee39f88779ce4, type: 3}
       propertyPath: m_Mass
       value: 100
