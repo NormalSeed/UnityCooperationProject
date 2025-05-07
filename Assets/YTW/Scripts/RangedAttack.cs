@@ -7,7 +7,7 @@ public class RangedAttack : MonoBehaviour, IAttackable
 {    
     [SerializeField] float attackRange;
     [SerializeField] float attackCoolTime;
-    [Range(10,30)]
+    [Range(30,50)]
     [SerializeField] float bulletSpeed;
     [SerializeField] Transform bulletPos;
     [SerializeField] BulletPool bulletpool;

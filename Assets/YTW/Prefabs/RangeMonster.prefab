@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 11
   attackCoolTime: 1
-  bulletSpeed: 20
+  bulletSpeed: 40
   bulletPos: {fileID: 7111235604508245796}
   bulletpool: {fileID: 2370713533793539978}
   soundPrefab: {fileID: 4826234249375745356}
