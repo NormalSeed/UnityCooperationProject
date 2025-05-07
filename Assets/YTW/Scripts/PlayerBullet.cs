@@ -7,6 +7,16 @@ public class PlayerBullet : MonoBehaviour
     [SerializeField] PooledBullet pooledBullet;
     [SerializeField] int damage;
     [SerializeField] GameObject bulletEffectPrefab;
+    [SerializeField] PB player;
+
+    private void Update()
+    {
+        Init();
+    }
+    void Init()
+    {
+        damage = player.attack;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -23,5 +33,10 @@ public class PlayerBullet : MonoBehaviour
             Destroy(effect, 1f);
         }
         pooledBullet.ReturnPool();
+    }
+    public void SetPlayer(PB playerRef)
+    {
+        player = playerRef;
+        Init();
     }
 }
