@@ -38,7 +38,7 @@ public class Shooter : MonoBehaviour
     public void Update()
     {
         GetDirection();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Fire1"))
         {
             Fire();
         }
