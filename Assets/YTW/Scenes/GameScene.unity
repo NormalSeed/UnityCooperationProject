@@ -4797,7 +4797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3309810944898664636, guid: ac24abfdd84d6ae4ba8ee39f88779ce4, type: 3}
       propertyPath: tiltSpeed
-      value: 900
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3359226135561458240, guid: ac24abfdd84d6ae4ba8ee39f88779ce4, type: 3}
       propertyPath: m_Mass
@@ -5724,6 +5724,10 @@ PrefabInstance:
     - target: {fileID: 3309810944898664636, guid: ac24abfdd84d6ae4ba8ee39f88779ce4, type: 3}
       propertyPath: padPower
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309810944898664636, guid: ac24abfdd84d6ae4ba8ee39f88779ce4, type: 3}
+      propertyPath: tiltSpeed
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3359226135561458240, guid: ac24abfdd84d6ae4ba8ee39f88779ce4, type: 3}
       propertyPath: m_Mass
