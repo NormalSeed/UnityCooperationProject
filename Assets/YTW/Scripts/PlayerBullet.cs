@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] PooledBullet pooledBullet;
     [SerializeField] int damage;
@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
         GameObject hitObject = collision.gameObject;
 
         OnDamaged targetHP = hitObject.GetComponent<OnDamaged>();
-        if (targetHP != null && targetHP.gameObject.CompareTag("Player"))
+        if (targetHP != null && targetHP.gameObject.CompareTag("Monster"))
         {
             targetHP.TakeDamaged(damage);
         }
