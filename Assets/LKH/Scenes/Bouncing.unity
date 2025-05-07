@@ -2120,6 +2120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackItem
       objectReference: {fileID: 0}
+    - target: {fileID: 7155156994220399052, guid: c9146b6b94dc44241899495a0ae01d49, type: 3}
+      propertyPath: buffTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5684,7 +5688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bf6fae1cac9704bb4170b299c33934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 974240888}
   x: 0
   y: 0
   z: 2
