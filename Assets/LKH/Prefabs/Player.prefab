@@ -150,7 +150,7 @@ MonoBehaviour:
   jumpPower: 5
   ItemCount: 0
   attack: 10
-  playerSpeed: 5
+  playerSpeed: 1
 --- !u!114 &4639471605539770594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf66a9dfa556a004c91f90f7adf9e1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 5
-  CurHP: 5
+  MaxHP: 10
+  CurHP: 0
   pooledMonster: {fileID: 0}
