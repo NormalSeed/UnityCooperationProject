@@ -13,12 +13,16 @@ public class Shooter : MonoBehaviour
 
     private Vector3 bulletSpawnPos;
     private Vector3 fixedForward = Vector3.forward;
+    private PB playerPB;
 
     public void Fire()
     {
         PooledBullet bullet = (PooledBullet)bulletPool.GetObject(bulletSpawnPos, transform.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.velocity = fixedForward * bulletSpeed;
+        playerPB = player.GetComponent<PB>();
+        PlayerBullet playerBullet = bullet.GetComponent<PlayerBullet>();
+        playerBullet.SetPlayer(playerPB);
     }
 
     private void GetDirection()
@@ -38,7 +42,7 @@ public class Shooter : MonoBehaviour
     public void Update()
     {
         GetDirection();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Fire1"))
         {
             Fire();
         }

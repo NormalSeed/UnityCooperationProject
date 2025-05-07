@@ -12,13 +12,14 @@ public class PB : MonoBehaviour
     private AudioSource audio;
 
     // 플레이어 능력치 변수
-    public int attack = 10;
+    public int attack = 1;
     public float playerSpeed = 5f;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         audio = GetComponent<AudioSource>();
+        attack = 1;
     }
 
     void Update()

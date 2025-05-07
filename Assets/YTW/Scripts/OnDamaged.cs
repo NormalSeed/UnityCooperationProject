@@ -66,6 +66,7 @@ public class OnDamaged : MonoBehaviour
         CurHP += amount;
         if (CurHP > MaxHP)
             CurHP = MaxHP;
+        healthBar?.SetHP((float)CurHP / MaxHP);
         return true;
     }
 }

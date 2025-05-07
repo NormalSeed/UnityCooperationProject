@@ -5,6 +5,7 @@ using UnityEngine;
 public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField] MonsterPool monsterPool;
+    [SerializeField] float spawnTimer;
     private Coroutine spawnCoroutine;
     private PooledMonster monster;
 
@@ -38,7 +39,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(spawnTimer);
             SpawnMonster();
         }
     }

@@ -2,18 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] PooledBullet pooledBullet;
     [SerializeField] int damage;
     [SerializeField] GameObject bulletEffectPrefab;
+    [SerializeField] PB player;
+
+    private void Update()
+    {
+        Init();
+    }
+    void Init()
+    {
+        damage = player.attack;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         GameObject hitObject = collision.gameObject;
 
         OnDamaged targetHP = hitObject.GetComponent<OnDamaged>();
-        if (targetHP != null && targetHP.gameObject.CompareTag("Player"))
+        if (targetHP != null && targetHP.gameObject.CompareTag("Monster"))
         {
             targetHP.TakeDamaged(damage);
         }
@@ -23,5 +33,10 @@ public class Bullet : MonoBehaviour
             Destroy(effect, 1f);
         }
         pooledBullet.ReturnPool();
+    }
+    public void SetPlayer(PB playerRef)
+    {
+        player = playerRef;
+        Init();
     }
 }

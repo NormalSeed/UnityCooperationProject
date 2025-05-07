@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 11
   attackCoolTime: 1
-  bulletSpeed: 20
+  bulletSpeed: 40
   bulletPos: {fileID: 7111235604508245796}
   bulletpool: {fileID: 2370713533793539978}
   soundPrefab: {fileID: 4826234249375745356}
@@ -439,7 +439,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6739c01659ad96d47987f4ddee226b36, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.005
   m_Pitch: 1
   Loop: 0
