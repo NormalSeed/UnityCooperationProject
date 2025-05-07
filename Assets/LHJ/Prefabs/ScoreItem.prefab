@@ -118,5 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db988db135353b4a924af88e723727b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreIncrease: 100
+  scoreIncrease: 1
   scoreEffect: {fileID: 6220918490801148041, guid: a736f18f5f57a4a40aba40a462e9fd8e, type: 3}
